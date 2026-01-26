@@ -1,23 +1,288 @@
 <?php
 /**
  * Plugin Name: Dynamic Classes for Elementor
- * Plugin URI: https://yourwebsite.com
- * Description: Add dynamic, responsive CSS classes (gap, padding, margin, etc.) to Elementor with admin controls
- * Version: 2.0.0
- * Author: Your Name
- * Author URI: https://yourwebsite.com
+ * Description: Add dynamic CSS classes (gap, padding, margin) via Elementor Site Settings
+ * Version: 3.0.0
+ * Author: DEVSR
  * Text Domain: dynamic-classes-elementor
- * Requires at least: 5.0
- * Requires PHP: 7.4
- * Elementor tested up to: 3.19
- * Elementor Pro tested up to: 3.19
  */
 
 if (!defined('ABSPATH')) {
     exit;
 }
 
-class Dynamic_Classes_Elementor {
+// Load the tab class only after Elementor is fully loaded
+add_action('elementor/init', function() {
+    
+    // Check if Tab_Base class exists before defining our tab
+    if (!class_exists('\Elementor\Core\Kits\Documents\Tabs\Tab_Base')) {
+        return;
+    }
+    
+    // Define the Dynamic Classes Tab
+    class Dynamic_Classes_Tab extends \Elementor\Core\Kits\Documents\Tabs\Tab_Base {
+        
+        public function get_id() {
+            return 'dynamic-classes';
+        }
+
+        public function get_title() {
+            return __('Dynamic Classes', 'dynamic-classes-elementor');
+        }
+
+        public function get_group() {
+            return 'settings';
+        }
+
+        public function get_icon() {
+            return 'eicon-code';
+        }
+
+        protected function register_tab_controls() {
+            
+            // Gap Classes Section
+            $this->start_controls_section(
+                'section_gap_classes',
+                [
+                    'label' => __('Gap Classes', 'dynamic-classes-elementor'),
+                    'tab' => $this->get_id(),
+                ]
+            );
+
+            $gap_repeater = new \Elementor\Repeater();
+
+            $gap_repeater->add_control(
+                'name',
+                [
+                    'label' => __('Class Name', 'dynamic-classes-elementor'),
+                    'type' => \Elementor\Controls_Manager::TEXT,
+                    'placeholder' => 'gap-custom-1',
+                    'description' => __('Enter class name without dot (e.g., gap-sm)', 'dynamic-classes-elementor'),
+                ]
+            );
+
+            $gap_repeater->add_control(
+                'row_gap',
+                [
+                    'label' => __('Row Gap', 'dynamic-classes-elementor'),
+                    'type' => \Elementor\Controls_Manager::TEXT,
+                    'placeholder' => '20px',
+                    'description' => __('e.g., 20px, 1.5rem, 2em', 'dynamic-classes-elementor'),
+                ]
+            );
+
+            $gap_repeater->add_control(
+                'column_gap',
+                [
+                    'label' => __('Column Gap', 'dynamic-classes-elementor'),
+                    'type' => \Elementor\Controls_Manager::TEXT,
+                    'placeholder' => '20px',
+                    'description' => __('e.g., 20px, 1.5rem, 2em', 'dynamic-classes-elementor'),
+                ]
+            );
+
+            $this->add_control(
+                'dce_gap_classes',
+                [
+                    'label' => __('Gap Classes', 'dynamic-classes-elementor'),
+                    'type' => \Elementor\Controls_Manager::REPEATER,
+                    'fields' => $gap_repeater->get_controls(),
+                    'default' => [
+                        [
+                            'name' => 'gap-xs',
+                            'row_gap' => '10px',
+                            'column_gap' => '10px',
+                        ],
+                        [
+                            'name' => 'gap-sm',
+                            'row_gap' => '20px',
+                            'column_gap' => '20px',
+                        ],
+                        [
+                            'name' => 'gap-md',
+                            'row_gap' => '30px',
+                            'column_gap' => '30px',
+                        ],
+                    ],
+                    'title_field' => '{{{ name }}} - Row: {{{ row_gap }}}, Col: {{{ column_gap }}}',
+                ]
+            );
+
+            $this->end_controls_section();
+
+            // Padding Classes Section
+            $this->start_controls_section(
+                'section_padding_classes',
+                [
+                    'label' => __('Padding Classes', 'dynamic-classes-elementor'),
+                    'tab' => $this->get_id(),
+                ]
+            );
+
+            $padding_repeater = new \Elementor\Repeater();
+
+            $padding_repeater->add_control(
+                'name',
+                [
+                    'label' => __('Class Name', 'dynamic-classes-elementor'),
+                    'type' => \Elementor\Controls_Manager::TEXT,
+                    'placeholder' => 'padding-custom-1',
+                ]
+            );
+
+            $padding_repeater->add_control(
+                'top',
+                [
+                    'label' => __('Top', 'dynamic-classes-elementor'),
+                    'type' => \Elementor\Controls_Manager::TEXT,
+                    'placeholder' => '10px',
+                ]
+            );
+
+            $padding_repeater->add_control(
+                'right',
+                [
+                    'label' => __('Right', 'dynamic-classes-elementor'),
+                    'type' => \Elementor\Controls_Manager::TEXT,
+                    'placeholder' => '10px',
+                ]
+            );
+
+            $padding_repeater->add_control(
+                'bottom',
+                [
+                    'label' => __('Bottom', 'dynamic-classes-elementor'),
+                    'type' => \Elementor\Controls_Manager::TEXT,
+                    'placeholder' => '10px',
+                ]
+            );
+
+            $padding_repeater->add_control(
+                'left',
+                [
+                    'label' => __('Left', 'dynamic-classes-elementor'),
+                    'type' => \Elementor\Controls_Manager::TEXT,
+                    'placeholder' => '10px',
+                ]
+            );
+
+            $this->add_control(
+                'dce_padding_classes',
+                [
+                    'label' => __('Padding Classes', 'dynamic-classes-elementor'),
+                    'type' => \Elementor\Controls_Manager::REPEATER,
+                    'fields' => $padding_repeater->get_controls(),
+                    'default' => [
+                        [
+                            'name' => 'padding-sm',
+                            'top' => '10px',
+                            'right' => '10px',
+                            'bottom' => '10px',
+                            'left' => '10px',
+                        ],
+                        [
+                            'name' => 'padding-md',
+                            'top' => '20px',
+                            'right' => '20px',
+                            'bottom' => '20px',
+                            'left' => '20px',
+                        ],
+                    ],
+                    'title_field' => '{{{ name }}} - {{{ top }}} {{{ right }}} {{{ bottom }}} {{{ left }}}',
+                ]
+            );
+
+            $this->end_controls_section();
+
+            // Margin Classes Section
+            $this->start_controls_section(
+                'section_margin_classes',
+                [
+                    'label' => __('Margin Classes', 'dynamic-classes-elementor'),
+                    'tab' => $this->get_id(),
+                ]
+            );
+
+            $margin_repeater = new \Elementor\Repeater();
+
+            $margin_repeater->add_control(
+                'name',
+                [
+                    'label' => __('Class Name', 'dynamic-classes-elementor'),
+                    'type' => \Elementor\Controls_Manager::TEXT,
+                    'placeholder' => 'margin-custom-1',
+                ]
+            );
+
+            $margin_repeater->add_control(
+                'top',
+                [
+                    'label' => __('Top', 'dynamic-classes-elementor'),
+                    'type' => \Elementor\Controls_Manager::TEXT,
+                    'placeholder' => '10px',
+                ]
+            );
+
+            $margin_repeater->add_control(
+                'right',
+                [
+                    'label' => __('Right', 'dynamic-classes-elementor'),
+                    'type' => \Elementor\Controls_Manager::TEXT,
+                    'placeholder' => '10px',
+                ]
+            );
+
+            $margin_repeater->add_control(
+                'bottom',
+                [
+                    'label' => __('Bottom', 'dynamic-classes-elementor'),
+                    'type' => \Elementor\Controls_Manager::TEXT,
+                    'placeholder' => '10px',
+                ]
+            );
+
+            $margin_repeater->add_control(
+                'left',
+                [
+                    'label' => __('Left', 'dynamic-classes-elementor'),
+                    'type' => \Elementor\Controls_Manager::TEXT,
+                    'placeholder' => '10px',
+                ]
+            );
+
+            $this->add_control(
+                'dce_margin_classes',
+                [
+                    'label' => __('Margin Classes', 'dynamic-classes-elementor'),
+                    'type' => \Elementor\Controls_Manager::REPEATER,
+                    'fields' => $margin_repeater->get_controls(),
+                    'default' => [
+                        [
+                            'name' => 'margin-sm',
+                            'top' => '10px',
+                            'right' => '0px',
+                            'bottom' => '10px',
+                            'left' => '0px',
+                        ],
+                        [
+                            'name' => 'margin-md',
+                            'top' => '20px',
+                            'right' => '0px',
+                            'bottom' => '20px',
+                            'left' => '0px',
+                        ],
+                    ],
+                    'title_field' => '{{{ name }}} - {{{ top }}} {{{ right }}} {{{ bottom }}} {{{ left }}}',
+                ]
+            );
+
+            $this->end_controls_section();
+        }
+    }
+    
+}, 1);
+
+class Dynamic_Classes_Elementor_Kit {
     
     private static $instance = null;
     
@@ -38,21 +303,17 @@ class Dynamic_Classes_Elementor {
             return;
         }
         
-        add_action('admin_menu', [$this, 'add_admin_menu']);
-        add_action('admin_init', [$this, 'register_settings']);
+        // Register Site Settings Tab
+        add_action('elementor/kit/register_tabs', [$this, 'register_site_settings_tab'], 100);
         
-        // Use wp_enqueue_scripts for frontend and Elementor preview
-        add_action('wp_enqueue_scripts', [$this, 'enqueue_dynamic_styles']);
-        add_action('elementor/preview/enqueue_styles', [$this, 'enqueue_dynamic_styles'], 999);
-        
+        // Add controls to elements
         add_action('elementor/element/container/section_layout/after_section_end', [$this, 'add_dynamic_class_control'], 10, 2);
         add_action('elementor/element/section/section_advanced/after_section_end', [$this, 'add_dynamic_class_control'], 10, 2);
         add_action('elementor/element/column/section_advanced/after_section_end', [$this, 'add_dynamic_class_control'], 10, 2);
-        add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
         
-        // AJAX handlers
-        add_action('wp_ajax_dce_save_classes', [$this, 'ajax_save_classes']);
-        add_action('wp_ajax_dce_delete_class', [$this, 'ajax_delete_class']);
+        // Generate CSS
+        add_action('wp_enqueue_scripts', [$this, 'enqueue_dynamic_styles']);
+        add_action('elementor/preview/enqueue_styles', [$this, 'enqueue_dynamic_styles'], 999);
     }
     
     public function admin_notice_missing_elementor() {
@@ -64,374 +325,123 @@ class Dynamic_Classes_Elementor {
         printf('<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', $message);
     }
     
-    public function add_admin_menu() {
-        add_menu_page(
-            __('Dynamic Classes', 'dynamic-classes-elementor'),
-            __('Dynamic Classes', 'dynamic-classes-elementor'),
-            'manage_options',
-            'dynamic-classes-elementor',
-            [$this, 'admin_page'],
-            'dashicons-editor-code',
-            59
-        );
-    }
-    
-    public function register_settings() {
-        register_setting('dce_settings', 'dce_gap_classes');
-        register_setting('dce_settings', 'dce_padding_classes');
-        register_setting('dce_settings', 'dce_margin_classes');
-    }
-    
-    public function enqueue_admin_scripts($hook) {
-        if ('toplevel_page_dynamic-classes-elementor' !== $hook) {
+    public function register_site_settings_tab($kit) {
+        // Check if our tab class exists
+        if (!class_exists('Dynamic_Classes_Tab')) {
             return;
         }
         
-        wp_enqueue_script('dce-admin-js', plugin_dir_url(__FILE__) . 'admin.js', ['jquery'], '2.0.0', true);
-        wp_localize_script('dce-admin-js', 'dceAdmin', [
-            'ajax_url' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('dce_admin_nonce')
-        ]);
-        
-        wp_enqueue_style('dce-admin-css', plugin_dir_url(__FILE__) . 'admin.css', [], '2.0.0');
+        $kit->register_tab('dynamic-classes', Dynamic_Classes_Tab::class);
     }
     
-    public function admin_page() {
-        $gap_classes = get_option('dce_gap_classes', []);
-        $padding_classes = get_option('dce_padding_classes', []);
-        $margin_classes = get_option('dce_margin_classes', []);
-        ?>
-        <div class="wrap dce-admin-wrap">
-            <h1><?php echo esc_html__('Dynamic Classes for Elementor', 'dynamic-classes-elementor'); ?></h1>
-            
-            <div class="dce-tabs">
-                <button class="dce-tab-btn active" data-tab="gap">
-                    <span class="dashicons dashicons-editor-table"></span>
-                    <?php esc_html_e('Gap Classes', 'dynamic-classes-elementor'); ?>
-                </button>
-                <button class="dce-tab-btn" data-tab="padding">
-                    <span class="dashicons dashicons-align-center"></span>
-                    <?php esc_html_e('Padding Classes', 'dynamic-classes-elementor'); ?>
-                </button>
-                <button class="dce-tab-btn" data-tab="margin">
-                    <span class="dashicons dashicons-move"></span>
-                    <?php esc_html_e('Margin Classes', 'dynamic-classes-elementor'); ?>
-                </button>
-            </div>
-            
-            <form id="dce-main-form" method="post">
-                <?php wp_nonce_field('dce_save_action', 'dce_nonce'); ?>
-                
-                <!-- Gap Tab -->
-                <div class="dce-tab-content active" id="tab-gap">
-                    <div class="dce-header">
-                        <h2><?php esc_html_e('Gap Classes', 'dynamic-classes-elementor'); ?></h2>
-                        <button type="button" class="button button-primary dce-add-class" data-type="gap">
-                            <span class="dashicons dashicons-plus-alt"></span>
-                            <?php esc_html_e('Add New Gap Class', 'dynamic-classes-elementor'); ?>
-                        </button>
-                    </div>
-                    
-                    <div id="gap-classes-container">
-                        <?php if (empty($gap_classes)): ?>
-                            <p class="dce-empty-message"><?php esc_html_e('No gap classes yet. Click "Add New Gap Class" to create one.', 'dynamic-classes-elementor'); ?></p>
-                        <?php else: ?>
-                            <?php foreach ($gap_classes as $index => $class): ?>
-                                <?php $this->render_gap_class_row($index, $class); ?>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
-                    </div>
-                </div>
-                
-                <!-- Padding Tab -->
-                <div class="dce-tab-content" id="tab-padding">
-                    <div class="dce-header">
-                        <h2><?php esc_html_e('Padding Classes', 'dynamic-classes-elementor'); ?></h2>
-                        <button type="button" class="button button-primary dce-add-class" data-type="padding">
-                            <span class="dashicons dashicons-plus-alt"></span>
-                            <?php esc_html_e('Add New Padding Class', 'dynamic-classes-elementor'); ?>
-                        </button>
-                    </div>
-                    
-                    <div id="padding-classes-container">
-                        <?php if (empty($padding_classes)): ?>
-                            <p class="dce-empty-message"><?php esc_html_e('No padding classes yet. Click "Add New Padding Class" to create one.', 'dynamic-classes-elementor'); ?></p>
-                        <?php else: ?>
-                            <?php foreach ($padding_classes as $index => $class): ?>
-                                <?php $this->render_padding_class_row($index, $class); ?>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
-                    </div>
-                </div>
-                
-                <!-- Margin Tab -->
-                <div class="dce-tab-content" id="tab-margin">
-                    <div class="dce-header">
-                        <h2><?php esc_html_e('Margin Classes', 'dynamic-classes-elementor'); ?></h2>
-                        <button type="button" class="button button-primary dce-add-class" data-type="margin">
-                            <span class="dashicons dashicons-plus-alt"></span>
-                            <?php esc_html_e('Add New Margin Class', 'dynamic-classes-elementor'); ?>
-                        </button>
-                    </div>
-                    
-                    <div id="margin-classes-container">
-                        <?php if (empty($margin_classes)): ?>
-                            <p class="dce-empty-message"><?php esc_html_e('No margin classes yet. Click "Add New Margin Class" to create one.', 'dynamic-classes-elementor'); ?></p>
-                        <?php else: ?>
-                            <?php foreach ($margin_classes as $index => $class): ?>
-                                <?php $this->render_margin_class_row($index, $class); ?>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
-                    </div>
-                </div>
-                
-                <div class="dce-save-section">
-                    <button type="submit" class="button button-primary button-large">
-                        <span class="dashicons dashicons-saved"></span>
-                        <?php esc_html_e('Save All Changes', 'dynamic-classes-elementor'); ?>
-                    </button>
-                    <span class="dce-save-message"></span>
-                </div>
-            </form>
-        </div>
-        
-        <!-- Templates for new rows -->
-        <script type="text/template" id="dce-gap-template">
-            <?php $this->render_gap_class_row('{{INDEX}}', ['name' => '', 'row_gap' => '', 'column_gap' => '']); ?>
-        </script>
-        
-        <script type="text/template" id="dce-padding-template">
-            <?php $this->render_padding_class_row('{{INDEX}}', ['name' => '', 'top' => '', 'right' => '', 'bottom' => '', 'left' => '']); ?>
-        </script>
-        
-        <script type="text/template" id="dce-margin-template">
-            <?php $this->render_margin_class_row('{{INDEX}}', ['name' => '', 'top' => '', 'right' => '', 'bottom' => '', 'left' => '']); ?>
-        </script>
-        <?php
-    }
-    
-    private function render_gap_class_row($index, $class) {
-        ?>
-        <div class="dce-class-row" data-index="<?php echo esc_attr($index); ?>">
-            <div class="dce-class-grid">
-                <div class="dce-class-name">
-                    <label><?php esc_html_e('Class Name', 'dynamic-classes-elementor'); ?></label>
-                    <input type="text" 
-                           name="gap_classes[<?php echo esc_attr($index); ?>][name]" 
-                           value="<?php echo esc_attr($class['name'] ?? ''); ?>" 
-                           placeholder="gap-custom-1"
-                           required>
-                </div>
-                
-                <div class="dce-class-value">
-                    <label><?php esc_html_e('Row Gap', 'dynamic-classes-elementor'); ?></label>
-                    <input type="text" 
-                           name="gap_classes[<?php echo esc_attr($index); ?>][row_gap]" 
-                           value="<?php echo esc_attr($class['row_gap'] ?? ''); ?>" 
-                           placeholder="20px or 1.5rem"
-                           required>
-                </div>
-                
-                <div class="dce-class-value">
-                    <label><?php esc_html_e('Column Gap', 'dynamic-classes-elementor'); ?></label>
-                    <input type="text" 
-                           name="gap_classes[<?php echo esc_attr($index); ?>][column_gap]" 
-                           value="<?php echo esc_attr($class['column_gap'] ?? ''); ?>" 
-                           placeholder="20px or 1.5rem"
-                           required>
-                </div>
-                
-                <div class="dce-class-actions">
-                    <button type="button" class="button dce-delete-class" title="<?php esc_attr_e('Delete', 'dynamic-classes-elementor'); ?>">
-                        <span class="dashicons dashicons-trash"></span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <?php
-    }
-    
-    private function render_padding_class_row($index, $class) {
-        ?>
-        <div class="dce-class-row" data-index="<?php echo esc_attr($index); ?>">
-            <div class="dce-class-grid dce-class-grid-4">
-                <div class="dce-class-name">
-                    <label><?php esc_html_e('Class Name', 'dynamic-classes-elementor'); ?></label>
-                    <input type="text" 
-                           name="padding_classes[<?php echo esc_attr($index); ?>][name]" 
-                           value="<?php echo esc_attr($class['name'] ?? ''); ?>" 
-                           placeholder="padding-custom-1"
-                           required>
-                </div>
-                
-                <div class="dce-class-value">
-                    <label><?php esc_html_e('Top', 'dynamic-classes-elementor'); ?></label>
-                    <input type="text" 
-                           name="padding_classes[<?php echo esc_attr($index); ?>][top]" 
-                           value="<?php echo esc_attr($class['top'] ?? ''); ?>" 
-                           placeholder="10px"
-                           required>
-                </div>
-                
-                <div class="dce-class-value">
-                    <label><?php esc_html_e('Right', 'dynamic-classes-elementor'); ?></label>
-                    <input type="text" 
-                           name="padding_classes[<?php echo esc_attr($index); ?>][right]" 
-                           value="<?php echo esc_attr($class['right'] ?? ''); ?>" 
-                           placeholder="10px"
-                           required>
-                </div>
-                
-                <div class="dce-class-value">
-                    <label><?php esc_html_e('Bottom', 'dynamic-classes-elementor'); ?></label>
-                    <input type="text" 
-                           name="padding_classes[<?php echo esc_attr($index); ?>][bottom]" 
-                           value="<?php echo esc_attr($class['bottom'] ?? ''); ?>" 
-                           placeholder="10px"
-                           required>
-                </div>
-                
-                <div class="dce-class-value">
-                    <label><?php esc_html_e('Left', 'dynamic-classes-elementor'); ?></label>
-                    <input type="text" 
-                           name="padding_classes[<?php echo esc_attr($index); ?>][left]" 
-                           value="<?php echo esc_attr($class['left'] ?? ''); ?>" 
-                           placeholder="10px"
-                           required>
-                </div>
-                
-                <div class="dce-class-actions">
-                    <button type="button" class="button dce-delete-class" title="<?php esc_attr_e('Delete', 'dynamic-classes-elementor'); ?>">
-                        <span class="dashicons dashicons-trash"></span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <?php
-    }
-    
-    private function render_margin_class_row($index, $class) {
-        ?>
-        <div class="dce-class-row" data-index="<?php echo esc_attr($index); ?>">
-            <div class="dce-class-grid dce-class-grid-4">
-                <div class="dce-class-name">
-                    <label><?php esc_html_e('Class Name', 'dynamic-classes-elementor'); ?></label>
-                    <input type="text" 
-                           name="margin_classes[<?php echo esc_attr($index); ?>][name]" 
-                           value="<?php echo esc_attr($class['name'] ?? ''); ?>" 
-                           placeholder="margin-custom-1"
-                           required>
-                </div>
-                
-                <div class="dce-class-value">
-                    <label><?php esc_html_e('Top', 'dynamic-classes-elementor'); ?></label>
-                    <input type="text" 
-                           name="margin_classes[<?php echo esc_attr($index); ?>][top]" 
-                           value="<?php echo esc_attr($class['top'] ?? ''); ?>" 
-                           placeholder="10px"
-                           required>
-                </div>
-                
-                <div class="dce-class-value">
-                    <label><?php esc_html_e('Right', 'dynamic-classes-elementor'); ?></label>
-                    <input type="text" 
-                           name="margin_classes[<?php echo esc_attr($index); ?>][right]" 
-                           value="<?php echo esc_attr($class['right'] ?? ''); ?>" 
-                           placeholder="10px"
-                           required>
-                </div>
-                
-                <div class="dce-class-value">
-                    <label><?php esc_html_e('Bottom', 'dynamic-classes-elementor'); ?></label>
-                    <input type="text" 
-                           name="margin_classes[<?php echo esc_attr($index); ?>][bottom]" 
-                           value="<?php echo esc_attr($class['bottom'] ?? ''); ?>" 
-                           placeholder="10px"
-                           required>
-                </div>
-                
-                <div class="dce-class-value">
-                    <label><?php esc_html_e('Left', 'dynamic-classes-elementor'); ?></label>
-                    <input type="text" 
-                           name="margin_classes[<?php echo esc_attr($index); ?>][left]" 
-                           value="<?php echo esc_attr($class['left'] ?? ''); ?>" 
-                           placeholder="10px"
-                           required>
-                </div>
-                
-                <div class="dce-class-actions">
-                    <button type="button" class="button dce-delete-class" title="<?php esc_attr_e('Delete', 'dynamic-classes-elementor'); ?>">
-                        <span class="dashicons dashicons-trash"></span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <?php
-    }
-    
-    public function ajax_save_classes() {
-        check_ajax_referer('dce_admin_nonce', 'nonce');
-        
-        if (!current_user_can('manage_options')) {
-            wp_send_json_error(['message' => 'Unauthorized']);
+    private function get_classes_from_kit($type = 'gap') {
+        if (!class_exists('\Elementor\Plugin')) {
+            return [];
         }
         
-        $gap_classes = isset($_POST['gap_classes']) ? $_POST['gap_classes'] : [];
-        $padding_classes = isset($_POST['padding_classes']) ? $_POST['padding_classes'] : [];
-        $margin_classes = isset($_POST['margin_classes']) ? $_POST['margin_classes'] : [];
+        $kit = \Elementor\Plugin::$instance->kits_manager->get_active_kit();
+        if (!$kit) {
+            return [];
+        }
         
-        // Sanitize and save
-        $gap_classes = array_map(function($class) {
-            return [
-                'name' => sanitize_text_field($class['name']),
-                'row_gap' => sanitize_text_field($class['row_gap']),
-                'column_gap' => sanitize_text_field($class['column_gap']),
-            ];
-        }, $gap_classes);
-        
-        $padding_classes = array_map(function($class) {
-            return [
-                'name' => sanitize_text_field($class['name']),
-                'top' => sanitize_text_field($class['top']),
-                'right' => sanitize_text_field($class['right']),
-                'bottom' => sanitize_text_field($class['bottom']),
-                'left' => sanitize_text_field($class['left']),
-            ];
-        }, $padding_classes);
-        
-        $margin_classes = array_map(function($class) {
-            return [
-                'name' => sanitize_text_field($class['name']),
-                'top' => sanitize_text_field($class['top']),
-                'right' => sanitize_text_field($class['right']),
-                'bottom' => sanitize_text_field($class['bottom']),
-                'left' => sanitize_text_field($class['left']),
-            ];
-        }, $margin_classes);
-        
-        update_option('dce_gap_classes', $gap_classes);
-        update_option('dce_padding_classes', $padding_classes);
-        update_option('dce_margin_classes', $margin_classes);
-        
-        wp_send_json_success(['message' => 'Classes saved successfully!']);
+        $classes = $kit->get_settings('dce_' . $type . '_classes');
+        return is_array($classes) ? $classes : [];
     }
-
+    
+    public function add_dynamic_class_control($element, $args) {
+        $gap_classes = $this->get_classes_from_kit('gap');
+        $padding_classes = $this->get_classes_from_kit('padding');
+        $margin_classes = $this->get_classes_from_kit('margin');
+        
+        // Build options arrays
+        $gap_options = ['' => __('None', 'dynamic-classes-elementor')];
+        foreach ($gap_classes as $class) {
+            if (!empty($class['name'])) {
+                $gap_options[$class['name']] = $class['name'];
+            }
+        }
+        
+        $padding_options = ['' => __('None', 'dynamic-classes-elementor')];
+        foreach ($padding_classes as $class) {
+            if (!empty($class['name'])) {
+                $padding_options[$class['name']] = $class['name'];
+            }
+        }
+        
+        $margin_options = ['' => __('None', 'dynamic-classes-elementor')];
+        foreach ($margin_classes as $class) {
+            if (!empty($class['name'])) {
+                $margin_options[$class['name']] = $class['name'];
+            }
+        }
+        
+        $element->start_controls_section(
+            'dce_dynamic_classes_section',
+            [
+                'label' => __('Dynamic Classes', 'dynamic-classes-elementor'),
+                'tab' => \Elementor\Controls_Manager::TAB_ADVANCED,
+            ]
+        );
+        
+        // Gap control
+        if (count($gap_options) > 1) {
+            $element->add_control(
+                'dce_gap_class',
+                [
+                    'label' => __('Gap Class', 'dynamic-classes-elementor'),
+                    'type' => \Elementor\Controls_Manager::SELECT,
+                    'options' => $gap_options,
+                    'default' => '',
+                    'prefix_class' => '',
+                ]
+            );
+        }
+        
+        // Padding control
+        if (count($padding_options) > 1) {
+            $element->add_control(
+                'dce_padding_class',
+                [
+                    'label' => __('Padding Class', 'dynamic-classes-elementor'),
+                    'type' => \Elementor\Controls_Manager::SELECT,
+                    'options' => $padding_options,
+                    'default' => '',
+                    'prefix_class' => '',
+                ]
+            );
+        }
+        
+        // Margin control
+        if (count($margin_options) > 1) {
+            $element->add_control(
+                'dce_margin_class',
+                [
+                    'label' => __('Margin Class', 'dynamic-classes-elementor'),
+                    'type' => \Elementor\Controls_Manager::SELECT,
+                    'options' => $margin_options,
+                    'default' => '',
+                    'prefix_class' => '',
+                ]
+            );
+        }
+        
+        $element->end_controls_section();
+    }
+    
     public function enqueue_dynamic_styles() {
-        // Register a dummy stylesheet to attach the inline styles to.
         wp_register_style('dce-frontend', false);
         wp_enqueue_style('dce-frontend');
 
         $dynamic_css = $this->get_dynamic_css();
-
         if (!empty($dynamic_css)) {
             wp_add_inline_style('dce-frontend', $dynamic_css);
         }
     }
     
     private function get_dynamic_css() {
-        $gap_classes = get_option('dce_gap_classes', []);
-        $padding_classes = get_option('dce_padding_classes', []);
-        $margin_classes = get_option('dce_margin_classes', []);
+        $gap_classes = $this->get_classes_from_kit('gap');
+        $padding_classes = $this->get_classes_from_kit('padding');
+        $margin_classes = $this->get_classes_from_kit('margin');
         
         $css = '';
         
@@ -459,7 +469,7 @@ class Dynamic_Classes_Elementor {
         // Generate margin classes
         foreach ($margin_classes as $class) {
             if (!empty($class['name'])) {
-                $css .= ".{$class['name']}.e-con {
+                $css .= ".{$class['name']}.e-con, .{$class['name']}.elementor-section, .{$class['name']}.elementor-column {
                     margin-top: {$class['top']} !important;
                     margin-right: {$class['right']} !important;
                     margin-bottom: {$class['bottom']} !important;
@@ -470,86 +480,6 @@ class Dynamic_Classes_Elementor {
         
         return $css;
     }
-    
-    public function add_dynamic_class_control($element, $args) {
-        $gap_classes = get_option('dce_gap_classes', []);
-        $padding_classes = get_option('dce_padding_classes', []);
-        $margin_classes = get_option('dce_margin_classes', []);
-        
-        // Build options arrays
-        $gap_options = ['' => __('Select Gap Class', 'dynamic-classes-elementor')];
-        foreach ($gap_classes as $class) {
-            if (!empty($class['name'])) {
-                $gap_options[$class['name']] = $class['name'];
-            }
-        }
-        
-        $padding_options = ['' => __('Select Padding Class', 'dynamic-classes-elementor')];
-        foreach ($padding_classes as $class) {
-            if (!empty($class['name'])) {
-                $padding_options[$class['name']] = $class['name'];
-            }
-        }
-        
-        $margin_options = ['' => __('Select Margin Class', 'dynamic-classes-elementor')];
-        foreach ($margin_classes as $class) {
-            if (!empty($class['name'])) {
-                $margin_options[$class['name']] = $class['name'];
-            }
-        }
-        
-        $element->start_controls_section(
-            'dce_dynamic_classes_section',
-            [
-                'label' => __('Dynamic Classes', 'dynamic-classes-elementor'),
-                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
-            ]
-        );
-        
-        // Gap control
-        if (!empty($gap_classes)) {
-            $element->add_control(
-                'dce_gap_class',
-                [
-                    'label' => __('Gap Class', 'dynamic-classes-elementor'),
-                    'type' => \Elementor\Controls_Manager::SELECT,
-                    'options' => $gap_options,
-                    'default' => '',
-                    'prefix_class' => '',
-                ]
-            );
-        }
-        
-        // Padding control
-        if (!empty($padding_classes)) {
-            $element->add_control(
-                'dce_padding_class',
-                [
-                    'label' => __('Padding Class', 'dynamic-classes-elementor'),
-                    'type' => \Elementor\Controls_Manager::SELECT,
-                    'options' => $padding_options,
-                    'default' => '',
-                    'prefix_class' => '',
-                ]
-            );
-        }
-        
-        // Margin control
-        if (!empty($margin_classes)) {
-            $element->add_control(
-                'dce_margin_class',
-                [
-                    'label' => __('Margin Class', 'dynamic-classes-elementor'),
-                    'type' => \Elementor\Controls_Manager::SELECT,
-                    'options' => $margin_options,
-                    'default' => '',
-                    'prefix_class' => '',
-                ]
-            );
-        }
-        
-        $element->end_controls_section();
-    }
 }
 
-Dynamic_Classes_Elementor::get_instance();
+Dynamic_Classes_Elementor_Kit::get_instance();
