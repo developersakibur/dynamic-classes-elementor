@@ -602,23 +602,47 @@ class Dynamic_Classes_Elementor_Kit {
                 continue;
             }
             
-            // Target .e-con-inner for boxed containers and direct .e-con for full-width
+            // Gap - using CSS custom properties for Elementor compatibility
             if ($row_gap === $column_gap) {
                 // Same gap for both directions
-                $css .= ".e-con-boxed.{$class_name} > .e-con-inner,\n";
+                // Boxed containers
+                $css .= ".e-con-boxed.{$class_name} > .e-con-inner {\n";
+                $css .= "    gap: {$row_gap} !important;\n";
+                $css .= "}\n\n";
+                
+                // Full-width containers (including child containers)
                 $css .= ".e-con-full.{$class_name},\n";
+                $css .= ".e-con.{$class_name}.e-child {\n";
+                $css .= "    --gap: {$row_gap} !important;\n";
+                $css .= "    --row-gap: {$row_gap} !important;\n";
+                $css .= "    --column-gap: {$row_gap} !important;\n";
+                $css .= "}\n\n";
+                
+                // Legacy sections and columns
                 $css .= ".elementor-section.{$class_name} > .elementor-container > .elementor-row,\n";
                 $css .= ".elementor-column.{$class_name} > .elementor-widget-wrap {\n";
-                $css .= "    gap: {$row_gap};\n";
+                $css .= "    gap: {$row_gap} !important;\n";
                 $css .= "}\n\n";
             } else {
                 // Different row and column gaps
-                $css .= ".e-con-boxed.{$class_name} > .e-con-inner,\n";
+                // Boxed containers
+                $css .= ".e-con-boxed.{$class_name} > .e-con-inner {\n";
+                $css .= "    row-gap: {$row_gap} !important;\n";
+                $css .= "    column-gap: {$column_gap} !important;\n";
+                $css .= "}\n\n";
+                
+                // Full-width containers (including child containers)
                 $css .= ".e-con-full.{$class_name},\n";
+                $css .= ".e-con.{$class_name}.e-child {\n";
+                $css .= "    --row-gap: {$row_gap} !important;\n";
+                $css .= "    --column-gap: {$column_gap} !important;\n";
+                $css .= "}\n\n";
+                
+                // Legacy sections and columns
                 $css .= ".elementor-section.{$class_name} > .elementor-container > .elementor-row,\n";
                 $css .= ".elementor-column.{$class_name} > .elementor-widget-wrap {\n";
-                $css .= "    row-gap: {$row_gap};\n";
-                $css .= "    column-gap: {$column_gap};\n";
+                $css .= "    row-gap: {$row_gap} !important;\n";
+                $css .= "    column-gap: {$column_gap} !important;\n";
                 $css .= "}\n\n";
             }
         }
@@ -643,15 +667,38 @@ class Dynamic_Classes_Elementor_Kit {
                 continue;
             }
             
-            // Target .e-con-inner for boxed, direct .e-con for full-width
-            $css .= ".e-con-boxed.{$class_name} > .e-con-inner,\n";
+            // Padding - using CSS custom properties for containers
+            // For boxed containers (.e-con-boxed), padding applies to .e-con-inner
+            $css .= ".e-con-boxed.{$class_name} > .e-con-inner {\n";
+            $css .= "    padding-top: {$top} !important;\n";
+            $css .= "    padding-right: {$right} !important;\n";
+            $css .= "    padding-bottom: {$bottom} !important;\n";
+            $css .= "    padding-left: {$left} !important;\n";
+            $css .= "}\n\n";
+            
+            // For full-width containers (.e-con-full) and child containers, use CSS variables
             $css .= ".e-con-full.{$class_name},\n";
-            $css .= ".elementor-section.{$class_name} > .elementor-container,\n";
+            $css .= ".e-con.{$class_name}.e-child {\n";
+            $css .= "    --padding-top: {$top} !important;\n";
+            $css .= "    --padding-right: {$right} !important;\n";
+            $css .= "    --padding-bottom: {$bottom} !important;\n";
+            $css .= "    --padding-left: {$left} !important;\n";
+            $css .= "}\n\n";
+            
+            // Sections (legacy) - direct properties
+            $css .= ".elementor-section.{$class_name} > .elementor-container {\n";
+            $css .= "    padding-top: {$top} !important;\n";
+            $css .= "    padding-right: {$right} !important;\n";
+            $css .= "    padding-bottom: {$bottom} !important;\n";
+            $css .= "    padding-left: {$left} !important;\n";
+            $css .= "}\n\n";
+            
+            // Columns (legacy)
             $css .= ".elementor-column.{$class_name} > .elementor-widget-wrap {\n";
-            $css .= "    padding-top: {$top};\n";
-            $css .= "    padding-right: {$right};\n";
-            $css .= "    padding-bottom: {$bottom};\n";
-            $css .= "    padding-left: {$left};\n";
+            $css .= "    padding-top: {$top} !important;\n";
+            $css .= "    padding-right: {$right} !important;\n";
+            $css .= "    padding-bottom: {$bottom} !important;\n";
+            $css .= "    padding-left: {$left} !important;\n";
             $css .= "}\n\n";
         }
         
@@ -675,14 +722,29 @@ class Dynamic_Classes_Elementor_Kit {
                 continue;
             }
             
-            // Margin applies to outer container
-            $css .= ".e-con.{$class_name},\n";
-            $css .= ".elementor-section.{$class_name},\n";
+            // Margin applies to outer container - using CSS custom properties for Elementor compatibility
+            // Containers (Flexbox/Grid)
+            $css .= ".e-con.{$class_name} {\n";
+            $css .= "    --margin-top: {$top} !important;\n";
+            $css .= "    --margin-right: {$right} !important;\n";
+            $css .= "    --margin-bottom: {$bottom} !important;\n";
+            $css .= "    --margin-left: {$left} !important;\n";
+            $css .= "}\n\n";
+            
+            // Sections (legacy) - direct properties
+            $css .= ".elementor-section.{$class_name} {\n";
+            $css .= "    margin-top: {$top} !important;\n";
+            $css .= "    margin-right: {$right} !important;\n";
+            $css .= "    margin-bottom: {$bottom} !important;\n";
+            $css .= "    margin-left: {$left} !important;\n";
+            $css .= "}\n\n";
+            
+            // Columns (legacy) - direct properties
             $css .= ".elementor-column.{$class_name} {\n";
-            $css .= "    margin-top: {$top};\n";
-            $css .= "    margin-right: {$right};\n";
-            $css .= "    margin-bottom: {$bottom};\n";
-            $css .= "    margin-left: {$left};\n";
+            $css .= "    margin-top: {$top} !important;\n";
+            $css .= "    margin-right: {$right} !important;\n";
+            $css .= "    margin-bottom: {$bottom} !important;\n";
+            $css .= "    margin-left: {$left} !important;\n";
             $css .= "}\n\n";
         }
         
