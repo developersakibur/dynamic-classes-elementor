@@ -70,7 +70,6 @@ add_action('elementor/init', function() {
                     'label' => esc_html__('Class Name', 'dynamic-classes-elementor'),
                     'type' => \Elementor\Controls_Manager::TEXT,
                     'placeholder' => 'gap-custom-1',
-                    'description' => esc_html__('Enter class name without dot (e.g., gap-sm). Use only letters, numbers, hyphens, and underscores.', 'dynamic-classes-elementor'),
                 ]
             );
 
@@ -80,7 +79,6 @@ add_action('elementor/init', function() {
                     'label' => esc_html__('Row Gap', 'dynamic-classes-elementor'),
                     'type' => \Elementor\Controls_Manager::TEXT,
                     'placeholder' => 'clamp(1rem, 3vw, 3rem)',
-                    'description' => esc_html__('Supports: px, rem, %, clamp(), calc(), min(), max()', 'dynamic-classes-elementor'),
                 ]
             );
 
@@ -90,7 +88,6 @@ add_action('elementor/init', function() {
                     'label' => esc_html__('Column Gap', 'dynamic-classes-elementor'),
                     'type' => \Elementor\Controls_Manager::TEXT,
                     'placeholder' => 'clamp(1rem, 3vw, 3rem)',
-                    'description' => esc_html__('Supports: px, rem, %, clamp(), calc(), min(), max()', 'dynamic-classes-elementor'),
                 ]
             );
 
@@ -140,7 +137,6 @@ add_action('elementor/init', function() {
                     'label' => esc_html__('Class Name', 'dynamic-classes-elementor'),
                     'type' => \Elementor\Controls_Manager::TEXT,
                     'placeholder' => 'padding-custom-1',
-                    'description' => esc_html__('Enter class name without dot (e.g., padding-sm)', 'dynamic-classes-elementor'),
                 ]
             );
 
@@ -150,7 +146,6 @@ add_action('elementor/init', function() {
                     'label' => esc_html__('Top', 'dynamic-classes-elementor'),
                     'type' => \Elementor\Controls_Manager::TEXT,
                     'placeholder' => 'clamp(1rem, 3vw, 3rem)',
-                    'description' => esc_html__('Supports clamp(), calc(), px, rem, etc.', 'dynamic-classes-elementor'),
                 ]
             );
 
@@ -226,7 +221,6 @@ add_action('elementor/init', function() {
                     'label' => esc_html__('Class Name', 'dynamic-classes-elementor'),
                     'type' => \Elementor\Controls_Manager::TEXT,
                     'placeholder' => 'margin-custom-1',
-                    'description' => esc_html__('Enter class name without dot (e.g., margin-sm)', 'dynamic-classes-elementor'),
                 ]
             );
 
@@ -236,7 +230,6 @@ add_action('elementor/init', function() {
                     'label' => esc_html__('Top', 'dynamic-classes-elementor'),
                     'type' => \Elementor\Controls_Manager::TEXT,
                     'placeholder' => 'clamp(1rem, 3vw, 3rem)',
-                    'description' => esc_html__('Supports negative values, clamp(), calc(), etc.', 'dynamic-classes-elementor'),
                 ]
             );
 
