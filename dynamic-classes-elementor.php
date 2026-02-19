@@ -104,6 +104,11 @@ add_action('elementor/init', function() {
                             'column_gap' => 'clamp(8px, 7.43px + 0.18vw, 10px)',
                         ],
                         [
+                            'name' => 'gap-15',
+                            'row_gap' => 'clamp(10px, 8.57px + 0.45vw, 15px)',
+                            'column_gap' => 'clamp(10px, 8.57px + 0.45vw, 15px)',
+                        ],
+                        [
                             'name' => 'gap-20',
                             'row_gap' => 'clamp(15px, 13.57px + 0.45vw, 20px)',
                             'column_gap' => 'clamp(15px, 13.57px + 0.45vw, 20px)',
@@ -230,12 +235,26 @@ add_action('elementor/init', function() {
                             'left' => 'clamp(15px, 13.57px + 0.45vw, 20px)',
                         ],
                         [
+                            'name' => 'padding-30-30',
+                            'top' => 'clamp(20px, 17.14px + 0.89vw, 30px)',
+                            'right' => 'clamp(20px, 17.14px + 0.89vw, 30px)',
+                            'bottom' => 'clamp(20px, 17.14px + 0.89vw, 30px)',
+                            'left' => 'clamp(20px, 17.14px + 0.89vw, 30px))',
+                        ],  
+                        [
                             'name' => 'padding-40-20',
                             'top' => 'clamp(25px, 20.71px + 1.34vw, 40px)',
                             'right' => 'clamp(15px, 13.57px + 0.45vw, 20px)',
                             'bottom' => 'clamp(25px, 20.71px + 1.34vw, 40px)',
                             'left' => 'clamp(15px, 13.57px + 0.45vw, 20px)',
-                        ],                        
+                        ],    
+                        [
+                            'name' => 'padding-40-40',
+                            'top' => 'clamp(25px, 20.71px + 1.34vw, 40px)',
+                            'right' => 'clamp(25px, 20.71px + 1.34vw, 40px)',
+                            'bottom' => 'clamp(25px, 20.71px + 1.34vw, 40px)',
+                            'left' => 'clamp(25px, 20.71px + 1.34vw, 40px)',
+                        ],
                         [
                             'name' => 'padding-60-20',
                             'top' => 'clamp(35px, 27.86px + 2.23vw, 60px)',
