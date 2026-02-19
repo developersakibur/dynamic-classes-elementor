@@ -239,7 +239,7 @@ add_action('elementor/init', function() {
                             'top' => 'clamp(20px, 17.14px + 0.89vw, 30px)',
                             'right' => 'clamp(20px, 17.14px + 0.89vw, 30px)',
                             'bottom' => 'clamp(20px, 17.14px + 0.89vw, 30px)',
-                            'left' => 'clamp(20px, 17.14px + 0.89vw, 30px))',
+                            'left' => 'clamp(20px, 17.14px + 0.89vw, 30px)',
                         ],  
                         [
                             'name' => 'padding-40-20',
