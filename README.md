@@ -13,7 +13,6 @@
 - [Features](#-features)
 - [Installation](#-installation)
 - [Usage](#-usage)
-- [Screenshots](#-screenshots)
 - [Performance](#-performance)
 - [Security](#-security)
 - [Developer Guide](#-developer-guide)
@@ -28,7 +27,7 @@ When building websites with Elementor, you often need to:
 - Apply the same spacing values repeatedly across different elements
 - Maintain consistent design system spacing
 - Adjust spacing globally without editing individual elements
-- Work with design tokens or style guides
+- Use fluid, responsive spacing with CSS `clamp()`
 
 ### The Solution
 **Dynamic Classes for Elementor** lets you define spacing classes once in Site Settings and reuse them anywhere. Change one value, update everywhere instantly.
@@ -38,25 +37,23 @@ When building websites with Elementor, you often need to:
 ✅ **Speed** - Apply spacing with a single dropdown selection  
 ✅ **Flexibility** - Update all instances by changing one definition  
 ✅ **Organization** - Keep your design system in one centralized location  
-✅ **Performance** - Cached and minified CSS for fast page loads  
+✅ **Fluid Spacing** - Built-in `clamp()` support for responsive layouts  
 
 ## ✨ Features
 
 ### Core Features
-- 🎨 **Gap Classes** - Row and column gaps for Flexbox/Grid layouts
-- 📦 **Padding Classes** - Individual control for all four sides
-- 📐 **Margin Classes** - Full margin customization
-- ⚙️ **Site Settings Integration** - Manage everything in Elementor's Kit
-- 🚀 **Performance Optimized** - CSS caching and minification
-- 🔒 **Secure** - Full input sanitization and validation
+- 🎨 **Gap Classes** — Row and column gaps for Flexbox/Grid layouts
+- 📦 **Padding Classes** — Individual control for all four sides
+- 📐 **Margin Classes** — Full margin customization
+- ⚙️ **Site Settings Integration** — Manage everything in Elementor's Kit
+- 🔒 **Secure** — Full input sanitization and validation
 
 ### Technical Features
-- Supports all CSS units (px, em, rem, %, vh, vw, etc.)
-- Supports calc() and CSS variables
-- Works with Containers, Sections, and Columns
-- Developer-friendly with hooks and filters
+- Supports all standard CSS units (px, em, rem, %, vh, vw, etc.)
+- Supports `calc()`, `clamp()`, `min()`, `max()`, and `var()` CSS functions
+- Works with Elementor Containers, Sections, and Columns (legacy + modern)
+- Developer-friendly filter hook for extending generated CSS
 - Translation-ready (i18n)
-- Clean uninstall (removes all data)
 
 ## 📥 Installation
 
@@ -82,103 +79,87 @@ When building websites with Elementor, you often need to:
 
 1. Go to **Elementor → Site Settings**
 2. Click on the **Dynamic Classes** tab
-3. Define your spacing classes:
+3. Add your spacing classes using the repeater fields
 
-**Example Gap Classes:**
+**Example Gap Class:**
 ```
 Name: gap-sm
-Row Gap: 20px
-Column Gap: 20px
+Row Gap: clamp(10px, 8.57px + 0.45vw, 15px)
+Column Gap: clamp(10px, 8.57px + 0.45vw, 15px)
 ```
 
-**Example Padding Classes:**
+**Example Padding Class:**
 ```
 Name: padding-section
-Top: 60px
-Right: 20px
-Bottom: 60px
-Left: 20px
+Top: clamp(35px, 27.86px + 2.23vw, 60px)
+Right: clamp(15px, 13.57px + 0.45vw, 20px)
+Bottom: clamp(35px, 27.86px + 2.23vw, 60px)
+Left: clamp(15px, 13.57px + 0.45vw, 20px)
 ```
 
-**Example Margin Classes:**
+**Example Margin Class:**
 ```
 Name: margin-stack
-Top: 0
+Top: clamp(8px, 7.43px + 0.18vw, 10px)
 Right: 0
-Bottom: 40px
+Bottom: clamp(8px, 7.43px + 0.18vw, 10px)
 Left: 0
 ```
 
+> ℹ️ **Tip:** The plugin ships with a set of pre-configured gap, padding, and margin defaults based on fluid `clamp()` values — ready to use out of the box.
+
 ### Step 2: Apply Classes to Elements
 
-1. Edit any Container, Section, or Column
-2. Go to **Advanced** tab
-3. Scroll to **Dynamic Classes** section
+1. Edit any Container, Section, or Column in Elementor
+2. Go to the **Advanced** tab
+3. Scroll to the **Dynamic Classes** section
 4. Select your class from the dropdown
-5. See the spacing applied instantly!
+5. The spacing is applied automatically via generated CSS
 
 ### Step 3: Update Globally
 
 Need to change spacing across your site?
-1. Go back to **Site Settings → Dynamic Classes**
-2. Update the value
-3. All elements using that class update automatically!
-
-## 📸 Screenshots
-
-### Site Settings Panel
-Define your spacing classes in one centralized location
-
-### Element Settings Dropdown
-Quick selection from any Container, Section, or Column
-
-### Live Preview
-See changes applied instantly in the editor
+1. Go to **Site Settings → Dynamic Classes**
+2. Update the value in the repeater
+3. All elements using that class update automatically
 
 ## ⚡ Performance
 
-This plugin is built with performance in mind:
+CSS is generated fresh on each page load and injected as an inline style. Because the values are stored in Elementor's Kit (which is cached by Elementor itself), there is no additional database overhead per request.
 
-### Caching Strategy
-- CSS is generated once and cached for 24 hours
-- Cache automatically clears when you update settings
-- No database queries on cached pages
-- Minified CSS output
+### CSS Output
+- ~50–200 bytes of CSS per class
+- Injected via `wp_add_inline_style` — no extra HTTP requests
+- Works seamlessly with Elementor's built-in CSS regeneration
 
-### Benchmarks
-- **Initial Load**: ~2ms to generate CSS
-- **Cached Loads**: 0ms (served from transient)
-- **CSS Size**: ~50-200 bytes per class
-- **Database Impact**: Zero queries after caching
-
-### Best Practices
-```php
-// Classes are cached in memory during request
-$classes = $this->get_classes_from_kit('gap'); // First call: DB query
-$classes = $this->get_classes_from_kit('gap'); // Second call: from cache
-```
+### Clearing Styles
+If spacing changes aren't appearing on the frontend:
+1. In the Elementor editor: **Tools → Regenerate Files & Data**
+2. Clear your browser cache
+3. Clear any server-side page cache
 
 ## 🔒 Security
 
 ### Input Sanitization
-All user inputs are sanitized:
+All user inputs are validated before being written to CSS:
+
 ```php
-// Class names
+// Class names are sanitized to safe HTML class strings
 $class_name = sanitize_html_class($input);
 
-// CSS values
-$value = validate_css_value($input); // Custom validation
+// CSS values are validated against a strict whitelist
+$value = $this->validate_css_value($input);
 ```
 
 ### Validation Rules
-- Class names: Only alphanumeric, hyphens, underscores
-- CSS values: Whitelist of safe units and patterns
-- calc() and var() functions: Escaped and validated
-- No arbitrary code execution possible
+- **Class names** — Only safe HTML class characters via `sanitize_html_class()`
+- **CSS values** — Whitelist of safe units (px, em, rem, %, vh, vw, etc.)
+- **CSS functions** — `calc()`, `clamp()`, `min()`, `max()`, `var()` are allowed with balanced parentheses and character-safe content
+- **No arbitrary code execution** — All values are escaped before output
 
 ### Capability Checks
 ```php
-// Only administrators can access settings
+// Only administrators can access the Dynamic Classes settings tab
 if (!current_user_can('manage_options')) {
     return;
 }
@@ -188,89 +169,71 @@ if (!current_user_can('manage_options')) {
 
 ### Hooks & Filters
 
-#### Modify Generated CSS
+#### Modify the Generated CSS
+
 ```php
 add_filter('dce_dynamic_css', function($css) {
-    // Add custom CSS
+    // Append custom CSS after the generated output
     $css .= '.my-custom-class { gap: 15px; }';
     return $css;
 });
 ```
 
-### Programmatic Usage
+### Get Classes Programmatically
 
-#### Clear Cache
 ```php
-$plugin = Dynamic_Classes_Elementor_Kit::get_instance();
-$plugin->clear_css_cache();
-```
-
-#### Get Classes Programmatically
-```php
-// Access the kit
 $kit = \Elementor\Plugin::$instance->kits_manager->get_active_kit();
-$gap_classes = $kit->get_settings('dce_gap_classes');
+
+$gap_classes     = $kit->get_settings('dce_gap_classes');
+$padding_classes = $kit->get_settings('dce_padding_classes');
+$margin_classes  = $kit->get_settings('dce_margin_classes');
 ```
 
 ### File Structure
+
 ```
 dynamic-classes-elementor/
 ├── dynamic-classes-elementor.php  # Main plugin file
-├── uninstall.php                  # Cleanup on uninstall
 ├── readme.txt                     # WordPress.org readme
-├── README.md                      # This file
-├── languages/                     # Translation files
-│   └── dynamic-classes-elementor.pot
-└── screenshots/                   # Screenshots for WP.org
-    ├── screenshot-1.png
-    ├── screenshot-2.png
-    └── screenshot-3.png
+└── README.md                      # This file
 ```
 
 ### Code Standards
 - Follows WordPress Coding Standards
-- PSR-4 autoloading compatible
 - Fully documented with PHPDoc
-- Escaping and sanitization on all outputs
-- Translation-ready
+- Sanitization on all inputs, escaping on all outputs
+- Translation-ready with `.pot` file support
 
 ## 📝 Changelog
 
-### Version 3.1.0 (2024-01-28)
+### Version 3.2.0
 #### 🔒 Security
-- Added comprehensive input sanitization
-- Implemented CSS value validation with whitelist
-- Added capability checks for settings access
-
-#### ⚡ Performance
-- Implemented CSS caching with transients (24h)
-- Added class query caching to prevent duplicate DB calls
-- CSS minification for smaller file size
-- Cache auto-clear on kit save
+- Added comprehensive CSS value validation with a strict whitelist
+- Implemented capability checks on settings access
+- Full input sanitization on all class names and CSS values
 
 #### 🎨 Improvements
-- Better CSS specificity (reduced !important usage)
-- Fixed gap property syntax (proper row-gap/column-gap)
-- Improved support for calc() and CSS variables
-- Better error handling and logging
+- Correct CSS selectors for modern Elementor Containers (boxed, full-width, and child)
+- Legacy Section and Column support retained alongside Container support
+- Removed unreliable caching in favour of fresh, always-accurate CSS generation
+- CSS is now injected as an inline style — no extra HTTP requests
 
 #### ✨ New Features
-- Developer filter hook: `dce_dynamic_css`
-- Settings link in plugins page
-- Proper text domain loading for translations
-- Comprehensive documentation
+- Developer filter: `dce_dynamic_css`
+- Settings shortcut link in the Plugins list page
+- Ships with pre-configured fluid spacing defaults using `clamp()`
 
 #### 🐛 Bug Fixes
-- Fixed gap classes not applying to all container types
-- Fixed padding/margin inheritance issues
-- Proper handling of 0 values
+- Fixed gap classes not applying correctly to all container types
+- Fixed padding/margin not applying in the Elementor editor preview
+- Corrected handling of `0` values without units
 
 ### Version 3.0.0
 - Initial release
 
 ## 🤝 Contributing
 
-Contributions are welcome! Here's how:
+Contributions are welcome!
 
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature/my-feature`
@@ -278,45 +241,32 @@ Contributions are welcome! Here's how:
 4. Push to the branch: `git push origin feature/my-feature`
 5. Submit a Pull Request
 
-### Development Setup
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/dynamic-classes-elementor.git
-
-# Navigate to wp-content/plugins/
-cd /path/to/wordpress/wp-content/plugins/
-
-# Symlink the plugin
-ln -s /path/to/dynamic-classes-elementor dynamic-classes-elementor
-
-# Activate in WordPress admin
-```
-
 ### Coding Guidelines
 - Follow [WordPress Coding Standards](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/)
 - Add PHPDoc comments for all functions
 - Sanitize all inputs, escape all outputs
-- Test with WordPress Debug mode enabled
-- Include unit tests where applicable
+- Test with WordPress Debug mode enabled (`WP_DEBUG = true`)
 
 ## 💬 Support
 
 ### Need Help?
-- 📖 [Documentation](https://github.com/yourusername/dynamic-classes-elementor/wiki)
 - 💬 [Support Forum](https://wordpress.org/support/plugin/dynamic-classes-elementor/)
 - 🐛 [Report a Bug](https://github.com/yourusername/dynamic-classes-elementor/issues)
 - 💡 [Request a Feature](https://github.com/yourusername/dynamic-classes-elementor/issues)
 
 ### Common Issues
 
-**Q: Classes not showing in dropdown?**  
-A: Make sure you've saved your Site Settings after defining classes.
+**Q: Classes not showing in the dropdown?**  
+A: Make sure you've saved your Site Settings after adding or editing classes.
 
-**Q: Changes not reflecting on frontend?**  
-A: Clear your browser cache and Elementor cache (Tools → Regenerate CSS).
+**Q: Spacing changes not appearing on the frontend?**  
+A: Go to **Elementor → Tools → Regenerate Files & Data**, then clear your browser and server cache.
 
-**Q: Getting a white screen?**  
-A: Check PHP error log. Ensure PHP 7.4+ and Elementor 3.5+ are installed.
+**Q: Getting a white screen after activation?**  
+A: Check your PHP error log. Ensure PHP 7.4+ and Elementor 3.5.0+ are active.
+
+**Q: The `clear_css_cache()` method isn't working?**  
+A: CSS caching was removed in v3.2.0. CSS is now generated fresh on every request — no cache to clear.
 
 ## 📄 License
 
@@ -330,21 +280,10 @@ This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
 ```
-
-## 🙏 Acknowledgments
-
-- Built with ❤️ for the Elementor community
-- Thanks to all contributors and users
-- Inspired by design systems and utility-first CSS frameworks
 
 ---
 
-**Made by [DEVSR](https://github.com/yourusername)** | [WordPress.org](https://wordpress.org/plugins/dynamic-classes-elementor/) | [Documentation](https://github.com/yourusername/dynamic-classes-elementor/wiki)
+**Made by [DEVSR](https://github.com/yourusername)** | [WordPress.org](https://wordpress.org/plugins/dynamic-classes-elementor/)
 
 ⭐ Star this repo if it helped you!
