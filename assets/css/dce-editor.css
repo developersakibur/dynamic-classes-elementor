@@ -1,0 +1,228 @@
+/* DCE Calculator Styles - Adapted from Extension */
+
+#dce-calculator-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0a0a0b;
+    z-index: 1000;
+    display: none; /* Controlled by JS */
+    align-items: center;
+    justify-content: center;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #e5e5e5;
+}
+
+.dce-calculator-container {
+    width: 400px;
+    padding: 30px;
+    background: #0a0a0b;
+    border-radius: 15px;
+    border: 1px solid #27272a;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.dce-calculator-container .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.dce-calculator-container h1 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #00ffff;
+  margin: 0;
+}
+
+/* iOS-style Toggle Switch */
+.dce-calculator-container .toggle-container {
+  display: flex;
+  align-items: center;
+}
+
+.dce-calculator-container .toggle-switch {
+  position: relative;
+  width: 48px;
+  height: 26px;
+  display: inline-block;
+}
+
+.dce-calculator-container .toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.dce-calculator-container .toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #27272a;
+  transition: all 0.3s ease;
+  border-radius: 26px;
+  border: 1px solid #3f3f46;
+}
+
+.dce-calculator-container .toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: #52525b;
+  transition: all 0.3s ease;
+  border-radius: 50%;
+}
+
+.dce-calculator-container .toggle-switch input:checked + .toggle-slider {
+  background: linear-gradient(135deg, #00ffff 0%, #06b6d4 100%);
+  border-color: #00ffff;
+}
+
+.dce-calculator-container .toggle-switch input:checked + .toggle-slider:before {
+  transform: translateX(22px);
+  background-color: #0a0a0b;
+}
+
+.dce-calculator-container .input-grid {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.dce-calculator-container .input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.dce-calculator-container .input-group:first-child {
+  flex: 0 0 35%;
+}
+
+.dce-calculator-container .input-group:last-child {
+  flex: 0 0 calc(65% - 12px);
+}
+
+.dce-calculator-container .input-group input {
+  background: #141416;
+  border: 1px solid #27272a;
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.dce-calculator-container .input-group input:focus {
+  outline: none;
+  border-color: #00ffff;
+  background: #18181b;
+}
+
+.dce-calculator-container .radio-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+  margin-bottom: 16px;
+  background: #141416;
+  border-radius: 10px;
+  padding: 6px;
+  border: 1px solid #27272a;
+}
+
+.dce-calculator-container .radio-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.dce-calculator-container .radio-option label {
+  display: block;
+  background: transparent;
+  border-radius: 8px;
+  padding: 10px 16px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #a1a1aa;
+}
+
+.dce-calculator-container .radio-option input[type="radio"]:checked + label {
+  background: linear-gradient(135deg, #00ffff 0%, #06b6d4 100%);
+  color: #0a0a0b;
+  font-weight: 600;
+}
+
+.dce-calculator-container .config-section {
+  margin-bottom: 16px;
+  display: none;
+}
+
+.dce-calculator-container .config-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.dce-calculator-container .config-pair {
+  flex: 1;
+  display: flex;
+  background: #0a0a0b;
+  border: 1px solid #27272a;
+  border-radius: 8px;
+  padding: 6px;
+  position: relative;
+}
+
+.dce-calculator-container .config-pair input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 8px 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+}
+
+.dce-calculator-container .config-pair input:focus {
+    outline: none;
+}
+
+.dce-calculator-container .clamp-output {
+  background: #141416;
+  border: 1px solid #27272a;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #00ffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  word-break: break-all;
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.dce-calculator-container .clamp-output.copied {
+  background: linear-gradient(135deg, #00ffff 0%, #06b6d4 100%);
+  color: #0a0a0b;
+}

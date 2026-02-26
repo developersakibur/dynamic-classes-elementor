@@ -206,6 +206,13 @@ dynamic-classes-elementor/
 
 ## 📝 Changelog
 
+### Version 3.3.0
+#### 🏗 Refactoring
+- Major architectural overhaul: split the monolithic plugin file into modular classes for better maintainability and performance.
+- Improved the `clamp()` calculator with better UI and responsiveness in the editor.
+- Added support for `min-height` dynamic classes.
+- Enhanced CSS validation logic for safer function handling.
+
 ### Version 3.2.0
 #### 🔒 Security
 - Added comprehensive CSS value validation with a strict whitelist

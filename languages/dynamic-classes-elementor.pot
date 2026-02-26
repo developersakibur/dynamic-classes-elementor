@@ -1,0 +1,144 @@
+# Copyright (C) 2026 DEVSR
+# This file is distributed under the same license as the Dynamic Classes for Elementor plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: Dynamic Classes for Elementor 3.3.0
+"
+"Report-Msgid-Bugs-To: https://github.com/yourusername/dynamic-classes-elementor/issues
+"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>
+"
+"Language-Team: LANGUAGE <LL@li.org>
+"
+"MIME-Version: 1.0
+"
+"Content-Type: text/plain; charset=UTF-8
+"
+"Content-Transfer-Encoding: 8bit
+"
+"POT-Creation-Date: 2026-02-27T00:43:00+00:00
+"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE
+"
+"X-Generator: WP-CLI 2.6.0
+"
+"X-Domain: dynamic-classes-elementor
+"
+
+#. Plugin Name of the plugin
+msgid "Dynamic Classes for Elementor"
+msgstr ""
+
+#. Description of the plugin
+msgid "Add dynamic CSS classes (gap, padding, margin) with clamp() support via Elementor Site Settings."
+msgstr ""
+
+#. Author of the plugin
+msgid "DEVSR"
+msgstr ""
+
+#: includes/class-plugin.php:123
+#: includes/class-plugin.php:132
+msgid "Dynamic Classes for Elementor"
+msgstr ""
+
+#: includes/class-plugin.php:124
+msgid "Elementor"
+msgstr ""
+
+#: includes/class-plugin.php:121
+msgid ""%1$s" requires "%2$s" to be installed and activated."
+msgstr ""
+
+#: includes/class-plugin.php:130
+msgid ""%1$s" requires "%2$s" version %3$s or greater."
+msgstr ""
+
+#: includes/class-plugin.php:153
+msgid "Settings"
+msgstr ""
+
+#: includes/class-settings-tab.php:24
+#: includes/class-settings-tab.php:63
+#: includes/class-element-controls.php:66
+msgid "Dynamic Classes"
+msgstr ""
+
+#: includes/class-settings-tab.php:41
+#: includes/class-settings-tab.php:61
+msgid "Gap Classes"
+msgstr ""
+
+#: includes/class-settings-tab.php:48
+#: includes/class-settings-tab.php:80
+#: includes/class-settings-tab.php:109
+#: includes/class-settings-tab.php:136
+msgid "Class Name"
+msgstr ""
+
+#: includes/class-settings-tab.php:54
+msgid "Row Gap"
+msgstr ""
+
+#: includes/class-settings-tab.php:60
+msgid "Column Gap"
+msgstr ""
+
+#: includes/class-settings-tab.php:73
+#: includes/class-settings-tab.php:89
+msgid "Padding Classes"
+msgstr ""
+
+#: includes/class-settings-tab.php:81
+#: includes/class-settings-tab.php:110
+msgid "Top"
+msgstr ""
+
+#: includes/class-settings-tab.php:82
+#: includes/class-settings-tab.php:111
+msgid "Right"
+msgstr ""
+
+#: includes/class-settings-tab.php:83
+#: includes/class-settings-tab.php:112
+msgid "Bottom"
+msgstr ""
+
+#: includes/class-settings-tab.php:84
+#: includes/class-settings-tab.php:113
+msgid "Left"
+msgstr ""
+
+#: includes/class-settings-tab.php:102
+#: includes/class-settings-tab.php:118
+msgid "Margin Classes"
+msgstr ""
+
+#: includes/class-settings-tab.php:129
+#: includes/class-settings-tab.php:143
+msgid "Min-Height Classes"
+msgstr ""
+
+#: includes/class-settings-tab.php:137
+msgid "Min Height"
+msgstr ""
+
+#: includes/class-element-controls.php:73
+msgid "Gap Class"
+msgstr ""
+
+#: includes/class-element-controls.php:82
+msgid "Padding Class"
+msgstr ""
+
+#: includes/class-element-controls.php:91
+msgid "Margin Class"
+msgstr ""
+
+#: includes/class-element-controls.php:100
+msgid "Min-Height Class"
+msgstr ""
+
+#: includes/class-element-controls.php:117
+msgid "None"
+msgstr ""
