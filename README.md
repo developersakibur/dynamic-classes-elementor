@@ -45,6 +45,7 @@ When building websites with Elementor, you often need to:
 - 🎨 **Gap Classes** — Row and column gaps for Flexbox/Grid layouts
 - 📦 **Padding Classes** — Individual control for all four sides
 - 📐 **Margin Classes** — Full margin customization
+- 📏 **Min-Height Classes** — Responsive height control for containers
 - ⚙️ **Site Settings Integration** — Manage everything in Elementor's Kit
 - 🔒 **Secure** — Full input sanitization and validation
 
@@ -53,7 +54,7 @@ When building websites with Elementor, you often need to:
 - Supports `calc()`, `clamp()`, `min()`, `max()`, and `var()` CSS functions
 - Works with Elementor Containers, Sections, and Columns (legacy + modern)
 - Developer-friendly filter hook for extending generated CSS
-- Translation-ready (i18n)
+- Translation-ready (i18n) with full `.pot` support
 
 ## 📥 Installation
 
@@ -193,8 +194,11 @@ $margin_classes  = $kit->get_settings('dce_margin_classes');
 
 ```
 dynamic-classes-elementor/
-├── dynamic-classes-elementor.php  # Main plugin file
-├── readme.txt                     # WordPress.org readme
+├── assets/                        # CSS and JS for the editor
+├── data/                          # Default class definitions (JSON)
+├── includes/                      # Core logic and modular classes
+├── languages/                     # Translation files
+├── dynamic-classes-elementor.php  # Main entry point
 └── README.md                      # This file
 ```
 
