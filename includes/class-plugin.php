@@ -47,6 +47,7 @@ class DCE_Plugin {
 
         $this->load_dependencies();
         $this->register_hooks();
+        $this->maybe_sync_default_data();
     }
 
     /**
@@ -169,6 +170,10 @@ class DCE_Plugin {
                     <input type="radio" name="propertyType" id="radioPadding" value="padding">
                     <label for="radioPadding">Spacing</label>
                     </div>
+                    <div class="radio-option">
+                    <input type="radio" name="propertyType" id="radioMaxWidth" value="max_width">
+                    <label for="radioMaxWidth">Width</label>
+                    </div>
                 </div>
 
                 <div class="config-section">
@@ -229,6 +234,52 @@ class DCE_Plugin {
         $css = $this->css_generator->generate();
         if ( ! empty( $css ) ) {
             wp_add_inline_style( 'dce-frontend', $css );
+        }
+    }
+
+    // ── Data Sync ─────────────────────────────────────────────────────────────
+
+    /**
+     * Check if the saved version matches the current version.
+     * If not, trigger a full sync of default data into the Elementor Kit.
+     */
+    private function maybe_sync_default_data(): void {
+        $saved_version = get_option( 'dce_version', '0.0.0' );
+
+        if ( version_compare( $saved_version, DCE_VERSION, '<' ) ) {
+            // Hook into elementor/init to ensure kits_manager is ready
+            add_action( 'elementor/init', [ $this, 'sync_default_data' ] );
+            update_option( 'dce_version', DCE_VERSION );
+        }
+    }
+
+    /**
+     * Overwrite Elementor Kit settings with the current JSON defaults.
+     * This ensures "reinstalls" or version updates force-refresh the data.
+     */
+    public function sync_default_data(): void {
+        try {
+            if ( ! class_exists( '\Elementor\Plugin' ) ) {
+                return;
+            }
+
+            $kit = \Elementor\Plugin::$instance->kits_manager->get_active_kit();
+            if ( ! $kit ) {
+                return;
+            }
+
+            $types = [ 'gap', 'padding', 'margin', 'min_height', 'max_width' ];
+            $settings_to_update = [];
+
+            foreach ( $types as $type ) {
+                $settings_to_update[ 'dce_' . $type . '_classes' ] = DCE_Data_Loader::get( $type );
+            }
+
+            // This permanently overwrites the kit settings in the database
+            $kit->update_settings( $settings_to_update );
+
+        } catch ( \Exception $e ) {
+            error_log( 'DCE Sync error: ' . $e->getMessage() );
         }
     }
 

@@ -185,94 +185,94 @@
     "min_height": [
         {
             "name": "min-height-400",
-            "min_height": "clamp(300px, 297.33px + 0.71vw, 400px)"
+            "min_height": "clamp(300px, 264.79px + 9.39vw, 400px)"
         },
         {
             "name": "min-height-500",
-            "min_height": "clamp(300px, 294.65px + 1.43vw, 500px)"
+            "min_height": "clamp(300px, 229.58px + 18.78vw, 500px)"
         },
         {
             "name": "min-height-600",
-            "min_height": "clamp(300px, 291.98px + 2.14vw, 600px)"
+            "min_height": "clamp(300px, 194.37px + 28.17vw, 600px)"
         },
         {
             "name": "min-height-700",
-            "min_height": "clamp(300px, 289.31px + 2.85vw, 700px)"
+            "min_height": "clamp(300px, 159.15px + 37.56vw, 700px)"
         },
         {
             "name": "min-height-800",
-            "min_height": "clamp(300px, 286.64px + 3.57vw, 800px)"
+            "min_height": "clamp(300px, 123.94px + 46.95vw, 800px)"
         },
         {
             "name": "min-height-900",
-            "min_height": "clamp(300px, 283.97px + 4.28vw, 900px)"
+            "min_height": "clamp(300px, 88.73px + 56.34vw, 900px)"
         },
         {
             "name": "min-height-1000",
-            "min_height": "clamp(300px, 281.30px + 5.00vw, 1000px)"
+            "min_height": "clamp(300px, 53.52px + 65.73vw, 1000px)"
         },
         {
             "name": "min-height-1100",
-            "min_height": "clamp(300px, 278.62px + 5.71vw, 1100px)"
+            "min_height": "clamp(300px, 18.31px + 75.12vw, 1100px)"
         },
         {
             "name": "min-height-1200",
-            "min_height": "clamp(300px, 275.95px + 6.43vw, 1200px)"
+            "min_height": "clamp(300px, -16.90px + 84.51vw, 1200px)"
         },
         {
             "name": "min-height-1300",
-            "min_height": "clamp(300px, 273.28px + 7.14vw, 1300px)"
+            "min_height": "clamp(300px, -52.11px + 93.90vw, 1300px)"
         },
         {
             "name": "min-height-1400",
-            "min_height": "clamp(300px, 270.61px + 7.85vw, 1400px)"
+            "min_height": "clamp(300px, -87.32px + 103.29vw, 1400px)"
         }
     ],
 
     "max_width": [
         {
             "name": "max-width-400",
-            "max_width": "clamp(375px, 374.33px + 0.18vw, 400px)"
+            "max_width": "clamp(375px, 366.20px + 2.35vw, 400px)"
         },
         {
             "name": "max-width-500",
-            "max_width": "clamp(375px, 371.66px + 0.89vw, 500px)"
+            "max_width": "clamp(375px, 330.99px + 11.74vw, 500px)"
         },
         {
             "name": "max-width-600",
-            "max_width": "clamp(375px, 368.98px + 1.60vw, 600px)"
+            "max_width": "clamp(375px, 295.77px + 21.13vw, 600px)"
         },
         {
             "name": "max-width-700",
-            "max_width": "clamp(375px, 366.31px + 2.32vw, 700px)"
+            "max_width": "clamp(375px, 260.56px + 30.52vw, 700px)"
         },
         {
             "name": "max-width-800",
-            "max_width": "clamp(375px, 363.64px + 3.03vw, 800px)"
+            "max_width": "clamp(375px, 225.35px + 39.91vw, 800px)"
         },
         {
             "name": "max-width-900",
-            "max_width": "clamp(375px, 360.96px + 3.74vw, 900px)"
+            "max_width": "clamp(375px, 190.14px + 49.30vw, 900px)"
         },
         {
             "name": "max-width-1000",
-            "max_width": "clamp(375px, 358.29px + 4.46vw, 1000px)"
+            "max_width": "clamp(375px, 154.93px + 58.69vw, 1000px)"
         },
         {
             "name": "max-width-1100",
-            "max_width": "clamp(375px, 355.61px + 5.17vw, 1100px)"
+            "max_width": "clamp(375px, 119.72px + 68.08vw, 1100px)"
         },
         {
             "name": "max-width-1200",
-            "max_width": "clamp(375px, 352.94px + 5.88vw, 1200px)"
+            "max_width": "clamp(375px, 84.51px + 77.46vw, 1200px)"
         },
         {
             "name": "max-width-1300",
-            "max_width": "clamp(375px, 350.27px + 6.60vw, 1300px)"
+            "max_width": "clamp(375px, 49.30px + 86.85vw, 1300px)"
         },
         {
             "name": "max-width-1400",
-            "max_width": "clamp(375px, 347.59px + 7.31vw, 1400px)"
+            "max_width": "clamp(375px, 14.08px + 96.24vw, 1400px)"
         }
     ]
 }

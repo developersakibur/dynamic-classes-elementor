@@ -8,7 +8,8 @@
     const DCE_Calculator = {
         DEFAULT_CONFIGS: {
             text: { minValue: 14, minVp: 16, maxValue: 40, maxVp: 72 },
-            padding: { minValue: 15, minVp: 20, maxValue: 55, maxVp: 100 }
+            padding: { minValue: 15, minVp: 20, maxValue: 55, maxVp: 100 },
+            max_width: { minValue: 320, minVp: 375, maxValue: 1200, maxVp: 1440 }
         },
         DEFAULT_VIEWPORT: {
             minWidth: 375,
@@ -76,7 +77,13 @@
         },
 
         checkActiveSections: function() {
-            const targetSections = ['section_gap_classes', 'section_padding_classes', 'section_margin_classes', 'section_min_height_classes'];
+            const targetSections = [
+                'section_gap_classes', 
+                'section_padding_classes', 
+                'section_margin_classes', 
+                'section_min_height_classes',
+                'section_max_width_classes'
+            ];
             let shouldShow = false;
             targetSections.forEach(section => {
                 if ($('.elementor-control-' + section).hasClass('e-open')) shouldShow = true;
