@@ -231,7 +231,7 @@ class DCE_CSS_Generator {
 
             // Widgets
             $css .= ".elementor-widget.{$name} {\n";
-            $css .= "    --container-widget-width: {$val} !important;\n}\n\n";
+            $css .= "    max-width: {$val} !important;\n}\n\n";
         }
 
         return $css;
