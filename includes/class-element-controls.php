@@ -59,18 +59,19 @@ class DCE_Element_Controls {
         $padding_opts    = $this->build_options( $this->generator->get_kit_classes( 'padding' ) );
         $margin_opts     = $this->build_options( $this->generator->get_kit_classes( 'margin' ) );
         $min_height_opts = $this->build_options( $this->generator->get_kit_classes( 'min_height' ) );
+        $max_width_opts  = $this->build_options( $this->generator->get_kit_classes( 'max_width' ) );
 
         // Determine if this is a structural element or a widget
         $is_structural = in_array( $type, [ 'container', 'section', 'column' ], true );
 
-        // If it's a widget, we only care about padding and margin
+        // If it's a widget, we only care about padding, margin, and max-width
         if ( ! $is_structural ) {
-            if ( count( $padding_opts ) <= 1 && count( $margin_opts ) <= 1 ) {
+            if ( count( $padding_opts ) <= 1 && count( $margin_opts ) <= 1 && count( $max_width_opts ) <= 1 ) {
                 return;
             }
         } else {
             // Structural: check all
-            if ( count( $gap_opts ) <= 1 && count( $padding_opts ) <= 1 && count( $margin_opts ) <= 1 && count( $min_height_opts ) <= 1 ) {
+            if ( count( $gap_opts ) <= 1 && count( $padding_opts ) <= 1 && count( $margin_opts ) <= 1 && count( $min_height_opts ) <= 1 && count( $max_width_opts ) <= 1 ) {
                 return;
             }
         }
@@ -118,6 +119,16 @@ class DCE_Element_Controls {
                 'label'        => esc_html__( 'Min-Height Class', 'dynamic-classes-elementor' ),
                 'type'         => \Elementor\Controls_Manager::SELECT,
                 'options'      => $min_height_opts,
+                'default'      => '',
+                'prefix_class' => '',
+            ] );
+        }
+
+        if ( count( $max_width_opts ) > 1 ) {
+            $element->add_control( 'dce_max_width_class', [
+                'label'        => esc_html__( 'Max-Width Class', 'dynamic-classes-elementor' ),
+                'type'         => \Elementor\Controls_Manager::SELECT,
+                'options'      => $max_width_opts,
                 'default'      => '',
                 'prefix_class' => '',
             ] );

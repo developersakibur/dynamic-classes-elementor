@@ -28,6 +28,7 @@ class DCE_CSS_Generator {
         $css .= $this->generate_padding_css();
         $css .= $this->generate_margin_css();
         $css .= $this->generate_min_height_css();
+        $css .= $this->generate_max_width_css();
 
         /**
          * Allow developers to append or modify the generated CSS.
@@ -198,6 +199,39 @@ class DCE_CSS_Generator {
             // Legacy sections/columns
             $css .= ".elementor-section.{$name}, .elementor-column.{$name} {\n";
             $css .= "    min-height: {$val} !important;\n}\n\n";
+        }
+
+        return $css;
+    }
+
+    private function generate_max_width_css(): string {
+        $css = '';
+
+        foreach ( $this->get_kit_classes( 'max_width' ) as $class ) {
+            if ( empty( $class['name'] ) ) continue;
+
+            $name = sanitize_html_class( $class['name'] );
+            if ( empty( $name ) ) continue;
+
+            $val = $this->validate( $class['max_width'] ?? '' );
+            if ( $val === false ) continue;
+
+            // Boxed containers -> target inner content width
+            $css .= ".e-con-boxed.{$name} > .e-con-inner {\n";
+            $css .= "    --content-width: {$val} !important;\n";
+            $css .= "    max-width: {$val} !important;\n}\n\n";
+
+            // Full-width / Child containers
+            $css .= ".e-con-full.{$name}, .e-con.{$name}.e-child {\n";
+            $css .= "    --width: {$val} !important;\n}\n\n";
+
+            // Legacy sections/columns
+            $css .= ".elementor-section.{$name}, .elementor-column.{$name} {\n";
+            $css .= "    max-width: {$val} !important;\n}\n\n";
+
+            // Widgets
+            $css .= ".elementor-widget.{$name} {\n";
+            $css .= "    --container-widget-width: {$val} !important;\n}\n\n";
         }
 
         return $css;

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Dynamic Classes for Elementor
  * Description: Add dynamic CSS classes (gap, padding, margin) with clamp() support via Elementor Site Settings.
- * Version:     3.3.0
+ * Version:     3.4.0
  * Author:      DEVSR
  * Text Domain: dynamic-classes-elementor
  * Domain Path: /languages
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-define( 'DCE_VERSION',    '3.3.0' );
+define( 'DCE_VERSION',    '3.4.0' );
 define( 'DCE_PLUGIN_FILE', __FILE__ );
 define( 'DCE_PLUGIN_DIR',  plugin_dir_path( __FILE__ ) );
 define( 'DCE_PLUGIN_URL',  plugin_dir_url( __FILE__ ) );

@@ -1,6 +1,6 @@
 {
     "_readme": "Default spacing classes for Dynamic Classes for Elementor. All values support CSS clamp(), calc(), min(), max(), or standard units (px, rem, em, %, vw, vh). Breakpoints used: min=320px, max=1280px.",
-    "_version": "3.3.0",
+    "_version": "3.4.0",
 
     "gap": [
         {
@@ -185,15 +185,94 @@
     "min_height": [
         {
             "name": "min-height-400",
-            "min_height": "400px"
+            "min_height": "clamp(300px, 297.33px + 0.71vw, 400px)"
+        },
+        {
+            "name": "min-height-500",
+            "min_height": "clamp(300px, 294.65px + 1.43vw, 500px)"
         },
         {
             "name": "min-height-600",
-            "min_height": "600px"
+            "min_height": "clamp(300px, 291.98px + 2.14vw, 600px)"
         },
         {
-            "name": "min-height-screen",
-            "min_height": "100vh"
+            "name": "min-height-700",
+            "min_height": "clamp(300px, 289.31px + 2.85vw, 700px)"
+        },
+        {
+            "name": "min-height-800",
+            "min_height": "clamp(300px, 286.64px + 3.57vw, 800px)"
+        },
+        {
+            "name": "min-height-900",
+            "min_height": "clamp(300px, 283.97px + 4.28vw, 900px)"
+        },
+        {
+            "name": "min-height-1000",
+            "min_height": "clamp(300px, 281.30px + 5.00vw, 1000px)"
+        },
+        {
+            "name": "min-height-1100",
+            "min_height": "clamp(300px, 278.62px + 5.71vw, 1100px)"
+        },
+        {
+            "name": "min-height-1200",
+            "min_height": "clamp(300px, 275.95px + 6.43vw, 1200px)"
+        },
+        {
+            "name": "min-height-1300",
+            "min_height": "clamp(300px, 273.28px + 7.14vw, 1300px)"
+        },
+        {
+            "name": "min-height-1400",
+            "min_height": "clamp(300px, 270.61px + 7.85vw, 1400px)"
+        }
+    ],
+
+    "max_width": [
+        {
+            "name": "max-width-400",
+            "max_width": "clamp(375px, 374.33px + 0.18vw, 400px)"
+        },
+        {
+            "name": "max-width-500",
+            "max_width": "clamp(375px, 371.66px + 0.89vw, 500px)"
+        },
+        {
+            "name": "max-width-600",
+            "max_width": "clamp(375px, 368.98px + 1.60vw, 600px)"
+        },
+        {
+            "name": "max-width-700",
+            "max_width": "clamp(375px, 366.31px + 2.32vw, 700px)"
+        },
+        {
+            "name": "max-width-800",
+            "max_width": "clamp(375px, 363.64px + 3.03vw, 800px)"
+        },
+        {
+            "name": "max-width-900",
+            "max_width": "clamp(375px, 360.96px + 3.74vw, 900px)"
+        },
+        {
+            "name": "max-width-1000",
+            "max_width": "clamp(375px, 358.29px + 4.46vw, 1000px)"
+        },
+        {
+            "name": "max-width-1100",
+            "max_width": "clamp(375px, 355.61px + 5.17vw, 1100px)"
+        },
+        {
+            "name": "max-width-1200",
+            "max_width": "clamp(375px, 352.94px + 5.88vw, 1200px)"
+        },
+        {
+            "name": "max-width-1300",
+            "max_width": "clamp(375px, 350.27px + 6.60vw, 1300px)"
+        },
+        {
+            "name": "max-width-1400",
+            "max_width": "clamp(375px, 347.59px + 7.31vw, 1400px)"
         }
     ]
 }

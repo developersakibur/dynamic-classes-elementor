@@ -39,6 +39,7 @@ class DCE_Settings_Tab extends \Elementor\Core\Kits\Documents\Tabs\Tab_Base {
         $this->register_padding_section();
         $this->register_margin_section();
         $this->register_min_height_section();
+        $this->register_max_width_section();
     }
 
     // ── Gap Section ───────────────────────────────────────────────────────────
@@ -174,6 +175,42 @@ class DCE_Settings_Tab extends \Elementor\Core\Kits\Documents\Tabs\Tab_Base {
             'fields'      => $repeater->get_controls(),
             'default'     => DCE_Data_Loader::get( 'min_height' ),
             'title_field' => '{{{ name }}} — {{{ min_height }}}',
+        ] );
+
+        $this->end_controls_section();
+    }
+
+    // ── Max-Width Section ─────────────────────────────────────────────────────
+
+    private function register_max_width_section(): void {
+        $this->start_controls_section(
+            'section_max_width_classes',
+            [
+                'label' => esc_html__( 'Max-Width Classes', 'dynamic-classes-elementor' ),
+                'tab'   => $this->get_id(),
+            ]
+        );
+
+        $repeater = new \Elementor\Repeater();
+
+        $repeater->add_control( 'name', [
+            'label'       => esc_html__( 'Class Name', 'dynamic-classes-elementor' ),
+            'type'        => \Elementor\Controls_Manager::TEXT,
+            'placeholder' => 'max-width-custom-1',
+        ] );
+
+        $repeater->add_control( 'max_width', [
+            'label'       => esc_html__( 'Max Width', 'dynamic-classes-elementor' ),
+            'type'        => \Elementor\Controls_Manager::TEXT,
+            'placeholder' => '800px',
+        ] );
+
+        $this->add_control( 'dce_max_width_classes', [
+            'label'       => esc_html__( 'Max-Width Classes', 'dynamic-classes-elementor' ),
+            'type'        => \Elementor\Controls_Manager::REPEATER,
+            'fields'      => $repeater->get_controls(),
+            'default'     => DCE_Data_Loader::get( 'max_width' ),
+            'title_field' => '{{{ name }}} — {{{ max_width }}}',
         ] );
 
         $this->end_controls_section();

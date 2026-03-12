@@ -46,6 +46,7 @@ When building websites with Elementor, you often need to:
 - 📦 **Padding Classes** — Individual control for all four sides
 - 📐 **Margin Classes** — Full margin customization
 - 📏 **Min-Height Classes** — Responsive height control for containers
+- ↔️ **Max-Width Classes** — Fluid width control for containers and widgets
 - ⚙️ **Site Settings Integration** — Manage everything in Elementor's Kit
 - 🔒 **Secure** — Full input sanitization and validation
 
@@ -209,6 +210,13 @@ dynamic-classes-elementor/
 - Translation-ready with `.pot` file support
 
 ## 📝 Changelog
+
+### Version 3.4.0
+#### ✨ New Features
+- Added **Max-Width Classes** system.
+- Support for fluid width on boxed containers (via `--content-width`), full-width containers (via `--width`), and widgets (via `--container-widget-width`).
+- Added default max-width classes (600px, 800px, 1000px, 1200px).
+- Refined CSS generation to prevent layout breaks on widgets by using custom properties instead of hard max-width.
 
 ### Version 3.3.0
 #### 🏗 Refactoring
