@@ -211,12 +211,14 @@ dynamic-classes-elementor/
 
 ## 📝 Changelog
 
-### Version 3.4.0
+### Version 3.5.0
 #### ✨ New Features
-- Added **Max-Width Classes** system.
+- Added **Max-Width Classes** system for Containers and Widgets.
 - Support for fluid width on boxed containers (via `--content-width`), full-width containers (via `--width`), and widgets (via `--container-widget-width`).
 - Added default max-width classes (600px, 800px, 1000px, 1200px).
 - Refined CSS generation to prevent layout breaks on widgets by using custom properties instead of hard max-width.
+- Implemented **Force Data Sync** logic to automatically update Elementor Site Settings when the plugin is updated or reinstalled.
+- Added **Max-Width** support to the `clamp()` calculator in the editor.
 
 ### Version 3.3.0
 #### 🏗 Refactoring

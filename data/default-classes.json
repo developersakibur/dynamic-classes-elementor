@@ -1,6 +1,6 @@
 {
     "_readme": "Default spacing classes for Dynamic Classes for Elementor. All values support CSS clamp(), calc(), min(), max(), or standard units (px, rem, em, %, vw, vh). Breakpoints used: min=320px, max=1280px.",
-    "_version": "3.4.0",
+    "_version": "3.5.0",
 
     "gap": [
         {
