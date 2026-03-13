@@ -134,7 +134,7 @@
 
 .dce-calculator-container .radio-grid {
     display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
+    grid-template-columns: repeat(2, 1fr) !important;
     gap: 6px !important;
     margin-bottom: 16px !important;
     background: #141416 !important;

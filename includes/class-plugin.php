@@ -170,10 +170,6 @@ class DCE_Plugin {
                         <input type="radio" name="propertyType" id="radioPadding" value="padding">
                         <label for="radioPadding">Spacing</label>
                     </div>
-                    <div class="radio-option">
-                        <input type="radio" name="propertyType" id="radioMaxWidth" value="max_width">
-                        <label for="radioMaxWidth">Width</label>
-                    </div>
                 </div>
 
                 <div class="config-section">
