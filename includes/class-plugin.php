@@ -145,57 +145,72 @@ class DCE_Plugin {
                 <div class="header">
                     <h1>clamp() Generator</h1>
                     <div class="toggle-container">
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="configToggle">
-                        <span class="toggle-slider"></span>
-                    </label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="configToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
                     </div>
                 </div>
                 
                 <div class="input-grid">
                     <div class="input-group">
-                    <input id="minSize" type="number" value="" min="5" max="800" step="1" placeholder="Min">
+                        <input id="minSize" type="number" value="" step="1" placeholder="Min">
                     </div>
                     <div class="input-group">
-                    <input id="maxSize" type="number" value="" min="10" max="1000" step="1" placeholder="Max" autofocus>
+                        <input id="maxSize" type="number" value="" step="1" placeholder="Max" autofocus>
                     </div>
                 </div>
 
                 <div class="radio-grid">
                     <div class="radio-option">
-                    <input type="radio" name="propertyType" id="radioText" value="text" checked>
-                    <label for="radioText">Text</label>
+                        <input type="radio" name="propertyType" id="radioText" value="text" checked>
+                        <label for="radioText">Text</label>
                     </div>
                     <div class="radio-option">
-                    <input type="radio" name="propertyType" id="radioPadding" value="padding">
-                    <label for="radioPadding">Spacing</label>
+                        <input type="radio" name="propertyType" id="radioPadding" value="padding">
+                        <label for="radioPadding">Spacing</label>
                     </div>
                     <div class="radio-option">
-                    <input type="radio" name="propertyType" id="radioMaxWidth" value="max_width">
-                    <label for="radioMaxWidth">Width</label>
+                        <input type="radio" name="propertyType" id="radioMaxWidth" value="max_width">
+                        <label for="radioMaxWidth">Width</label>
                     </div>
                 </div>
 
                 <div class="config-section">
                     <div class="config-row">
-                    <div class="config-pair">
-                        <input id="configMinValue" type="number" min="1" max="500" step="1" placeholder="Min Val">
-                        <input id="configMinVp" type="number" min="1" max="2000" step="1" placeholder="Min VP">
-                    </div>
-                    <div class="config-pair">
-                        <input id="configMaxValue" type="number" min="1" max="500" step="1" placeholder="Max Val">
-                        <input id="configMaxVp" type="number" min="1" max="2000" step="1" placeholder="Max VP">
-                    </div>
+                        <div class="config-pair">
+                            <input id="configMinValue" type="number" min="1" max="500" step="1" placeholder="Min Val">
+                            <input id="configMinVp" type="number" min="1" max="2000" step="1" placeholder="Min VP">
+                        </div>
+                        <div class="config-pair">
+                            <input id="configMaxValue" type="number" min="1" max="500" step="1" placeholder="Max Val">
+                            <input id="configMaxVp" type="number" min="1" max="2000" step="1" placeholder="Max VP">
+                        </div>
                     </div>
                     <div class="config-row">
-                    <div class="config-pair">
-                        <input id="minWidth" type="number" min="1" max="5000" step="1" placeholder="Min Width">
-                        <input id="maxWidth" type="number" min="1" max="5000" step="1" placeholder="Max Width">
+                        <div class="config-pair">
+                            <input id="minWidth" type="number" min="1" max="5000" step="1" placeholder="Min Width">
+                            <input id="maxWidth" type="number" min="1" max="5000" step="1" placeholder="Max Width">
+                        </div>
                     </div>
+                    <div class="config-row config-pair">
+                        <div class="slider-row">
+                            <div class="vp-badge-small" id="sliderMinBadge">
+                                <span id="sliderCurrentVp">375</span>
+                            </div>
+                            <div class="slider-wrap-preview">
+                                <div class="track-bg-preview"></div>
+                                <div class="track-fill-preview" id="sliderTrackFill"></div>
+                                <input type="range" id="vpPreviewSlider" min="375" max="1440" value="375" step="1">
+                            </div>
+                            <div class="vp-badge-small" id="sliderMaxBadge">
+                                <span id="sliderCurrentClamp">00.00</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div id="result" class="clamp-output">clamp(00px, 00.0px + 0.00vw, 0px)</div>
+                <div id="result" class="clamp-output">0px, 0.00px + 0.00vw, 0px</div>
             </div>
         </div>
         <?php

@@ -1,11 +1,12 @@
 /**
  * DCE Editor Integration & Calculator Logic
- * Enhanced with Responsiveness, Copy Fallback, and Corrected Logic
+ * Enhanced with Fluid Clamp Generator Logic & Design
  */
 (function($) {
     'use strict';
 
     const DCE_Calculator = {
+        BRAND_NAME: "developersakibur",
         DEFAULT_CONFIGS: {
             text: { minValue: 14, minVp: 16, maxValue: 40, maxVp: 72 },
             padding: { minValue: 15, minVp: 20, maxValue: 55, maxVp: 100 },
@@ -19,9 +20,9 @@
         viewport: {},
         currentClampValue: "",
         isShowing: false,
+        saveTimeout: null,
 
         init: function() {
-            console.log('DCE: Calculator Initializing...');
             this.loadSettings();
             this.injectTemplate();
             this.startWatcher();
@@ -38,6 +39,7 @@
                 $('#maxSize').val(40);
             }
             this.updateMinSize();
+            this.updateSliderPreview();
         },
 
         injectTemplate: function() {
@@ -85,8 +87,13 @@
                 'section_max_width_classes'
             ];
             let shouldShow = false;
+            
+            // If any of these sections exist in the panel, it means the Dynamic Classes tab is active.
+            // Elementor's Kit manager swaps the content of the panel when switching tabs.
             targetSections.forEach(section => {
-                if ($('.elementor-control-' + section).hasClass('e-open')) shouldShow = true;
+                if ($('.elementor-control-' + section).length > 0) {
+                    shouldShow = true;
+                }
             });
 
             if (shouldShow && !this.isShowing) {
@@ -122,99 +129,190 @@
             $('#elementor-preview-iframe').css('opacity', '1');
         },
 
-        // --- Logic Fixes ---
+        // --- Logic from popup.js ---
 
         getMobileSize: function(desktopPx, propertyType) {
-            desktopPx = parseInt(desktopPx);
-            if (!desktopPx || desktopPx < 1) return 1;
-            
-            // Extension logic: if less than 10, just subtract 1
-            if (desktopPx < 10) return Math.max(desktopPx - 1, 1);
+            const isNegative = desktopPx < 0;
+            const absPx = Math.abs(desktopPx);
 
             const config = this.configs[propertyType];
-            if (!config) return Math.round(desktopPx * 0.75);
-
-            if (desktopPx < config.minVp) {
-                const diff = Math.abs(config.minVp - config.minValue);
-                return Math.max(desktopPx - diff, 1);
+            if (!config) {
+                const result = Math.round(absPx * 0.75);
+                return isNegative ? -result : result;
             }
 
-            const ratio = (desktopPx - config.minVp) / (config.maxVp - config.minVp);
-            const mobileSize = config.minValue + (ratio * (config.maxValue - config.minValue));
-            return Math.round(mobileSize);
+            const minVP = parseInt(config.minVp);
+            const maxVP = parseInt(config.maxVp);
+            const minValue = parseInt(config.minValue);
+            const maxValue = parseInt(config.maxValue);
+            const smallSubtract = Math.abs(minVP - minValue);
+
+            let result;
+            if (absPx < minVP) {
+                result = absPx - smallSubtract;
+            } else {
+                const ratio = (absPx - minVP) / (maxVP - minVP);
+                result = minValue + ratio * (maxValue - minValue);
+            }
+
+            const finalResult = Math.round(result);
+            return isNegative ? -finalResult : finalResult;
         },
 
         updateMinSize: function() {
-            const maxPx = parseInt($('#maxSize').val());
+            const maxPxValue = $('#maxSize').val().trim();
             const type = $('input[name="propertyType"]:checked').val();
 
-            if (!isNaN(maxPx) && maxPx >= 10) {
-                const calcMin = this.getMobileSize(maxPx, type);
-                $('#minSize').val(calcMin);
+            if (maxPxValue !== "") {
+                const maxPx = parseFloat(maxPxValue);
+                const calculatedMin = this.getMobileSize(maxPx, type);
+                $('#minSize').val(calculatedMin);
                 this.updateClamp();
             }
         },
 
         updateClamp: function() {
-            const minVW = +$('#minWidth').val();
-            const maxVW = +$('#maxWidth').val();
-            const minPx = +$('#minSize').val();
-            const maxPx = +$('#maxSize').val();
+            const minVWValue = $('#minWidth').val().trim();
+            const maxVWValue = $('#maxWidth').val().trim();
+            const minPxValue = $('#minSize').val().trim();
+            const maxPxValue = $('#maxSize').val().trim();
 
-            if (!minVW || !maxVW || !minPx || !maxPx) {
-                $('#result').html('<span class="error-message">Enter values (Min 10)</span>');
+            $('#result').removeClass("copied");
+
+            if (minVWValue === "" || maxVWValue === "" || minPxValue === "" || maxPxValue === "") {
+                $('#result').html('<span class="error-message">Enter values</span>');
                 this.currentClampValue = "";
                 return;
             }
 
-            const slope = (maxPx - minPx) / (maxVW - minVW);
-            const vwVal = (slope * 100).toFixed(2);
-            const interceptPx = minPx - slope * minVW;
+            const minVW = parseFloat(minVWValue);
+            const maxVW = parseFloat(maxVWValue);
+            const minPx = parseFloat(minPxValue);
+            const maxPx = parseFloat(maxPxValue);
 
-            this.currentClampValue = `clamp(${minPx}px, ${interceptPx.toFixed(2)}px + ${vwVal}vw, ${maxPx}px)`;
-            $('#result').text(this.currentClampValue);
+            if (maxVW === minVW) {
+                $('#result').html('<span class="error-message">Viewport widths must differ</span>');
+                this.currentClampValue = "";
+                return;
+            }
+
+            // Check if we should use the "calc(-1 * clamp(...))" pattern for negative values
+            const bothNegative = minPx < 0 && maxPx < 0;
+
+            if (bothNegative) {
+                const absMinPx = Math.abs(minPx);
+                const absMaxPx = Math.abs(maxPx);
+                const slope = (absMaxPx - absMinPx) / (maxVW - minVW);
+                const vwVal = (slope * 100).toFixed(2);
+                const interceptPx = absMinPx - slope * minVW;
+                const actualMin = Math.min(absMinPx, absMaxPx);
+                const actualMax = Math.max(absMinPx, absMaxPx);
+
+                const innerValuePositive = `${actualMin}px, ${interceptPx.toFixed(2)}px + ${vwVal}vw, ${actualMax}px`;
+                this.currentClampValue = `calc(-1 * clamp(${innerValuePositive}))`;
+                $('#result').text(`-1 * (${innerValuePositive})`);
+            } else {
+                const slope = (maxPx - minPx) / (maxVW - minVW);
+                const vwVal = (slope * 100).toFixed(2);
+                const interceptPx = minPx - slope * minVW;
+                const actualMin = Math.min(minPx, maxPx);
+                const actualMax = Math.max(minPx, maxPx);
+
+                const innerValue = `${actualMin}px, ${interceptPx.toFixed(2)}px + ${vwVal}vw, ${actualMax}px`;
+                this.currentClampValue = `clamp(${innerValue})`;
+                $('#result').text(innerValue);
+            }
+            this.updateSliderPreview();
         },
 
         copyClamp: function() {
             if (!this.currentClampValue) return;
             const text = this.currentClampValue;
 
-            const performCopy = (val) => {
+            const performCopy = () => {
                 $('#result').addClass('copied');
                 setTimeout(() => $('#result').removeClass('copied'), 1500);
             };
 
-            // Modern API
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).then(performCopy);
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(performCopy).catch(() => this.fallbackCopy(text, performCopy));
             } else {
-                // Fallback for older browsers or insecure contexts
-                const textArea = document.createElement("textarea");
-                textArea.value = text;
-                document.body.appendChild(textArea);
-                textArea.select();
-                try {
-                    document.execCommand('copy');
-                    performCopy();
-                } catch (err) {
-                    console.error('Fallback copy failed', err);
-                }
-                document.body.removeChild(textArea);
+                this.fallbackCopy(text, performCopy);
             }
         },
 
-        // --- Event Binding ---
+        fallbackCopy: function(text, callback) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-9999px";
+            textArea.style.top = "0";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                if (callback) callback();
+            } catch (err) {
+                console.error("Fallback copy failed", err);
+            }
+            document.body.removeChild(textArea);
+        },
+
+        updateSliderPreview: function() {
+            const minVW = parseFloat($('#minWidth').val()) || this.DEFAULT_VIEWPORT.minWidth;
+            const maxVW = parseFloat($('#maxWidth').val()) || this.DEFAULT_VIEWPORT.maxWidth;
+            const vw = parseFloat($('#vpPreviewSlider').val());
+
+            $('#vpPreviewSlider').attr('min', minVW);
+            $('#vpPreviewSlider').attr('max', maxVW);
+
+            const percent = (vw - minVW) / (maxVW - minVW) * 100;
+            $('#sliderTrackFill').css('width', Math.max(0, Math.min(100, percent)) + "%");
+
+            $('#sliderCurrentVp').text(vw);
+            $('#sliderCurrentClamp').text(this.calcClampAtVp(vw));
+        },
+
+        calcClampAtVp: function(vw) {
+            const minPx = parseFloat($('#minSize').val());
+            const maxPx = parseFloat($('#maxSize').val());
+            const minVW = parseFloat($('#minWidth').val()) || this.DEFAULT_VIEWPORT.minWidth;
+            const maxVW = parseFloat($('#maxWidth').val()) || this.DEFAULT_VIEWPORT.maxWidth;
+
+            if (isNaN(minPx) || isNaN(maxPx)) return "—";
+
+            const slope = (maxPx - minPx) / (maxVW - minVW);
+            const intercept = minPx - slope * minVW;
+            const preferred = intercept + slope * vw;
+            const clampMin = Math.min(minPx, maxPx);
+            const clampMax = Math.max(minPx, maxPx);
+            return Math.min(Math.max(preferred, clampMin), clampMax).toFixed(2);
+        },
+
+        // --- Settings Management ---
 
         loadSettings: function() {
             const savedConfigs = localStorage.getItem('dce_property_configs');
             const savedViewport = localStorage.getItem('dce_viewport_settings');
+            const panelOpen = localStorage.getItem('dce_config_panel_open');
+
             this.configs = savedConfigs ? JSON.parse(savedConfigs) : { ...this.DEFAULT_CONFIGS };
             this.viewport = savedViewport ? JSON.parse(savedViewport) : { ...this.DEFAULT_VIEWPORT };
+
+            if (panelOpen === 'true') {
+                $('#configToggle').prop('checked', true);
+                $('.config-section').show();
+            }
         },
 
         saveSettings: function() {
-            localStorage.setItem('dce_property_configs', JSON.stringify(this.configs));
-            localStorage.setItem('dce_viewport_settings', JSON.stringify(this.viewport));
+            clearTimeout(this.saveTimeout);
+            this.saveTimeout = setTimeout(() => {
+                localStorage.setItem('dce_property_configs', JSON.stringify(this.configs));
+                localStorage.setItem('dce_viewport_settings', JSON.stringify(this.viewport));
+                localStorage.setItem('dce_config_panel_open', $('#configToggle').is(':checked'));
+            }, 300);
         },
 
         bindCalculatorEvents: function() {
@@ -222,17 +320,22 @@
             $('#maxSize').on('input', () => this.updateMinSize());
             $('#minSize').on('input', () => this.updateClamp());
             $('#minWidth, #maxWidth').on('input', () => this.saveViewportSettings());
+            
             $('input[name="propertyType"]').on('change', function() {
                 self.loadConfigInputs($(this).val());
                 self.updateMinSize();
             });
+
             $('#configMinValue, #configMinVp, #configMaxValue, #configMaxVp').on('input', () => this.saveConfigFromInputs());
+            
             $('#configToggle').on('change', function() {
                 $('.config-section').toggle($(this).is(':checked'));
-                localStorage.setItem('dce_config_panel_open', $(this).is(':checked'));
+                self.saveSettings();
             });
+
             $('#result').on('click', () => this.copyClamp());
-            
+            $('#vpPreviewSlider').on('input', () => this.updateSliderPreview());
+
             // Mouse wheel support
             $('.dce-calculator-container input[type="number"]').on('wheel', function(e) {
                 if (document.activeElement === this) {
@@ -247,24 +350,16 @@
         applyViewportValues: function() {
             $('#minWidth').val(this.viewport.minWidth);
             $('#maxWidth').val(this.viewport.maxWidth);
+            $('#vpPreviewSlider').val(this.viewport.minWidth);
         },
 
         applyConfigsToRadios: function() {
-            const self = this;
-            $('input[name="propertyType"]').each(function() {
-                const type = $(this).val();
-                const config = self.configs[type];
-                if (config) {
-                    $(this).data('minVp', config.minVp);
-                    $(this).data('maxVp', config.maxVp);
-                    $(this).data('minValue', config.minValue);
-                    $(this).data('maxValue', config.maxValue);
-                }
-            });
+            // Already handled by loadConfigInputs and data attributes if needed,
+            // but we use the central this.configs object in getMobileSize.
         },
 
         loadConfigInputs: function(type) {
-            const config = this.configs[type];
+            const config = this.configs[type] || this.DEFAULT_CONFIGS[type];
             if (config) {
                 $('#configMinValue').val(config.minValue);
                 $('#configMinVp').val(config.minVp);
@@ -281,7 +376,6 @@
                 minValue: parseInt($('#configMinValue').val()) || 1,
                 maxValue: parseInt($('#configMaxValue').val()) || 1
             };
-            this.applyConfigsToRadios();
             this.saveSettings();
             this.updateMinSize();
         },

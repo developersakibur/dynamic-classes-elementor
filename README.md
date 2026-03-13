@@ -16,7 +16,6 @@
 - [Performance](#-performance)
 - [Security](#-security)
 - [Developer Guide](#-developer-guide)
-- [Changelog](#-changelog)
 - [Contributing](#-contributing)
 - [Support](#-support)
 
@@ -41,21 +40,19 @@ When building websites with Elementor, you often need to:
 
 ## ✨ Features
 
-### Core Features
-- 🎨 **Gap Classes** — Row and column gaps for Flexbox/Grid layouts
-- 📦 **Padding Classes** — Individual control for all four sides
-- 📐 **Margin Classes** — Full margin customization
-- 📏 **Min-Height Classes** — Responsive height control for containers
-- ↔️ **Max-Width Classes** — Fluid width control for containers and widgets
-- ⚙️ **Site Settings Integration** — Manage everything in Elementor's Kit
-- 🔒 **Secure** — Full input sanitization and validation
+### 🚀 Dynamic Class Types
+- 🎨 **Gap Classes** — Unified or individual control for Row and Column gaps. Optimized for Flexbox and Grid Containers, as well as legacy Sections and Columns.
+- 📦 **Padding Classes** — Surgical control for all four sides (Top, Right, Bottom, Left). Applies to Containers, Sections, Columns, and even individual Widgets.
+- 📐 **Margin Classes** — Full margin customization to manage external spacing between elements. Works across all Elementor structural elements and widgets.
+- 📏 **Min-Height Classes** — Set fluid or fixed minimum heights. Perfect for ensuring consistent hero sections or feature boxes across screen sizes.
+- ↔️ **Max-Width Classes** — Take control of content width. Support for boxed containers (via `--content-width`), full-width containers (via `--width`), and widget constraints.
 
-### Technical Features
-- Supports all standard CSS units (px, em, rem, %, vh, vw, etc.)
-- Supports `calc()`, `clamp()`, `min()`, `max()`, and `var()` CSS functions
-- Works with Elementor Containers, Sections, and Columns (legacy + modern)
-- Developer-friendly filter hook for extending generated CSS
-- Translation-ready (i18n) with full `.pot` support
+### 🛠 Technical Highlights
+- ⚙️ **Site Settings Integration** — Manage your entire design system spacing from a single centralized tab in Elementor Kit settings.
+- 📏 **Clamp Calculator** — Built-in fluid typography and spacing generator to create perfectly responsive `clamp()` values without leaving the editor.
+- 🚀 **Zero Bloat** — CSS is generated only for the classes you create and injected inline. No extra CSS files or HTTP requests.
+- 🔒 **Secure & Optimized** — Full input sanitization, strict CSS value validation, and compatibility with Elementor's CSS regeneration.
+- 🌍 **Translation Ready** — Fully internationalized and ready for your language.
 
 ## 📥 Installation
 
@@ -65,10 +62,12 @@ When building websites with Elementor, you often need to:
 3. Click `Install Now` and then `Activate`
 
 ### Manual Installation
-1. Download the latest release from [GitHub Releases](https://github.com/yourusername/dynamic-classes-elementor/releases)
-2. Go to `Plugins → Add New → Upload Plugin`
-3. Upload the ZIP file
-4. Activate the plugin
+1. Click the green **Code** button at the top of this repository.
+2. Select **Download ZIP**.
+3. Go to your WordPress admin dashboard.
+4. Navigate to `Plugins → Add New → Upload Plugin`.
+5. Upload the downloaded ZIP file.
+6. Activate the plugin.
 
 ### Requirements
 - WordPress 5.8+
@@ -108,8 +107,6 @@ Bottom: clamp(8px, 7.43px + 0.18vw, 10px)
 Left: 0
 ```
 
-> ℹ️ **Tip:** The plugin ships with a set of pre-configured gap, padding, and margin defaults based on fluid `clamp()` values — ready to use out of the box.
-
 ### Step 2: Apply Classes to Elements
 
 1. Edit any Container, Section, or Column in Elementor
@@ -124,6 +121,22 @@ Need to change spacing across your site?
 1. Go to **Site Settings → Dynamic Classes**
 2. Update the value in the repeater
 3. All elements using that class update automatically
+
+---
+
+## 🎁 Default Classes
+
+The plugin ships with a comprehensive set of **Fluid Spacing Classes** out of the box. These use carefully calculated `clamp()` values optimized for a viewport range of **320px to 1280px**.
+
+| Type | Class Range | Description |
+| :--- | :--- | :--- |
+| **Gap** | `gap-10` → `gap-100` | Fluid row and column gaps for layout consistency. |
+| **Padding** | `padding-10-20` → `padding-100-20` | Responsive padding (Vertical-Horizontal patterns). |
+| **Margin** | `margin-top-10` → `margin-top-100` | Fluid top margins for perfect element stacking. |
+| **Min-Height** | `min-height-400` → `min-height-1400` | Fluid container heights (300px mobile → Target desktop). |
+| **Max-Width** | `max-width-400` → `max-width-1400` | Fluid width constraints (375px mobile → Target desktop). |
+
+> 💡 **Note:** You can view, edit, or delete these defaults at any time in **Site Settings → Dynamic Classes**.
 
 ## ⚡ Performance
 
@@ -208,48 +221,6 @@ dynamic-classes-elementor/
 - Fully documented with PHPDoc
 - Sanitization on all inputs, escaping on all outputs
 - Translation-ready with `.pot` file support
-
-## 📝 Changelog
-
-### Version 3.5.0
-#### ✨ New Features
-- Added **Max-Width Classes** system for Containers and Widgets.
-- Support for fluid width on boxed containers (via `--content-width`), full-width containers (via `--width`), and widgets (via `max-width`).
-- Added default max-width classes (600px, 800px, 1000px, 1200px).
-- Implemented **Force Data Sync** logic to automatically update Elementor Site Settings when the plugin is updated or reinstalled.
-- Added **Max-Width** support to the `clamp()` calculator in the editor.
-
-### Version 3.3.0
-#### 🏗 Refactoring
-- Major architectural overhaul: split the monolithic plugin file into modular classes for better maintainability and performance.
-- Improved the `clamp()` calculator with better UI and responsiveness in the editor.
-- Added support for `min-height` dynamic classes.
-- Enhanced CSS validation logic for safer function handling.
-
-### Version 3.2.0
-#### 🔒 Security
-- Added comprehensive CSS value validation with a strict whitelist
-- Implemented capability checks on settings access
-- Full input sanitization on all class names and CSS values
-
-#### 🎨 Improvements
-- Correct CSS selectors for modern Elementor Containers (boxed, full-width, and child)
-- Legacy Section and Column support retained alongside Container support
-- Removed unreliable caching in favour of fresh, always-accurate CSS generation
-- CSS is now injected as an inline style — no extra HTTP requests
-
-#### ✨ New Features
-- Developer filter: `dce_dynamic_css`
-- Settings shortcut link in the Plugins list page
-- Ships with pre-configured fluid spacing defaults using `clamp()`
-
-#### 🐛 Bug Fixes
-- Fixed gap classes not applying correctly to all container types
-- Fixed padding/margin not applying in the Elementor editor preview
-- Corrected handling of `0` values without units
-
-### Version 3.0.0
-- Initial release
 
 ## 🤝 Contributing
 
