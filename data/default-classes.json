@@ -184,6 +184,10 @@
 
     "min_height": [
         {
+            "name": "min-height-300",
+            "min_height": "clamp(250px, 232.39px + 4.69vw, 300px)"
+        },
+        {
             "name": "min-height-400",
             "min_height": "clamp(300px, 264.79px + 9.39vw, 400px)"
         },
