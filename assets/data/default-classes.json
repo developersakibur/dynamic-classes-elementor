@@ -1,0 +1,296 @@
+{
+    "_readme": "Default spacing classes for Dynamic Classes for Elementor. All values support CSS clamp(), calc(), min(), max(), or standard units (px, rem, em, %, vw, vh). Breakpoints used: min=320px, max=1280px.",
+    "_version": "3.5.0",
+
+    "gap": [
+        {
+            "name": "gap-10",
+            "row_gap": "clamp(8px, 7.30px + 0.19vw, 10px)",
+            "column_gap": "clamp(8px, 7.30px + 0.19vw, 10px)"
+        },
+        {
+            "name": "gap-15",
+            "row_gap": "clamp(10px, 8.24px + 0.47vw, 15px)",
+            "column_gap": "clamp(10px, 8.24px + 0.47vw, 15px)"
+        },
+        {
+            "name": "gap-20",
+            "row_gap": "clamp(15px, 13.24px + 0.47vw, 20px)",
+            "column_gap": "clamp(15px, 13.24px + 0.47vw, 20px)"
+        },
+        {
+            "name": "gap-30",
+            "row_gap": "clamp(15px, 9.72px + 1.41vw, 30px)",
+            "column_gap": "clamp(15px, 9.72px + 1.41vw, 30px)"
+        },
+        {
+            "name": "gap-40",
+            "row_gap": "clamp(15px, 6.20px + 2.35vw, 40px)",
+            "column_gap": "clamp(15px, 6.20px + 2.35vw, 40px)"
+        },
+        {
+            "name": "gap-50",
+            "row_gap": "clamp(15px, 2.68px + 3.29vw, 50px)",
+            "column_gap": "clamp(15px, 2.68px + 3.29vw, 50px)"
+        },
+        {
+            "name": "gap-60",
+            "row_gap": "clamp(15px, -0.85px + 4.23vw, 60px)",
+            "column_gap": "clamp(15px, -0.85px + 4.23vw, 60px)"
+        },
+        {
+            "name": "gap-80",
+            "row_gap": "clamp(15px, -7.89px + 6.10vw, 80px)",
+            "column_gap": "clamp(15px, -7.89px + 6.10vw, 80px)"
+        },
+        {
+            "name": "gap-100",
+            "row_gap": "clamp(15px, -14.93px + 7.98vw, 100px)",
+            "column_gap": "clamp(15px, -14.93px + 7.98vw, 100px)"
+        }
+    ],
+
+    "padding": [
+        {
+            "name": "padding-10-10",
+            "top":    "clamp(8px, 7.30px + 0.19vw, 10px)",
+            "right":  "clamp(8px, 7.30px + 0.19vw, 10px)",
+            "bottom": "clamp(8px, 7.30px + 0.19vw, 10px)",
+            "left":   "clamp(8px, 7.30px + 0.19vw, 10px)"
+        },
+        {
+            "name": "padding-10-20",
+            "top":    "clamp(8px, 7.30px + 0.19vw, 10px)",
+            "right":  "clamp(15px, 13.24px + 0.47vw, 20px)",
+            "bottom": "clamp(8px, 7.30px + 0.19vw, 10px)",
+            "left":   "clamp(15px, 13.24px + 0.47vw, 20px)"
+        },
+        {
+            "name": "padding-15-15",
+            "top":    "clamp(10px, 8.24px + 0.47vw, 15px)",
+            "right":  "clamp(10px, 8.24px + 0.47vw, 15px)",
+            "bottom": "clamp(10px, 8.24px + 0.47vw, 15px)",
+            "left":   "clamp(10px, 8.24px + 0.47vw, 15px)"
+        },
+        {
+            "name": "padding-20-20",
+            "top":    "clamp(15px, 13.24px + 0.47vw, 20px)",
+            "right":  "clamp(15px, 13.24px + 0.47vw, 20px)",
+            "bottom": "clamp(15px, 13.24px + 0.47vw, 20px)",
+            "left":   "clamp(15px, 13.24px + 0.47vw, 20px)"
+        },
+        {
+            "name": "padding-30-20",
+            "top":    "clamp(20px, 16.48px + 0.94vw, 30px)",
+            "right":  "clamp(15px, 13.24px + 0.47vw, 20px)",
+            "bottom": "clamp(20px, 16.48px + 0.94vw, 30px)",
+            "left":   "clamp(15px, 13.24px + 0.47vw, 20px)"
+        },
+        {
+            "name": "padding-30-30",
+            "top":    "clamp(20px, 16.48px + 0.94vw, 30px)",
+            "right":  "clamp(20px, 16.48px + 0.94vw, 30px)",
+            "bottom": "clamp(20px, 16.48px + 0.94vw, 30px)",
+            "left":   "clamp(20px, 16.48px + 0.94vw, 30px)"
+        },
+        {
+            "name": "padding-40-20",
+            "top":    "clamp(25px, 19.72px + 1.41vw, 40px)",
+            "right":  "clamp(15px, 13.24px + 0.47vw, 20px)",
+            "bottom": "clamp(25px, 19.72px + 1.41vw, 40px)",
+            "left":   "clamp(15px, 13.24px + 0.47vw, 20px)"
+        },
+        {
+            "name": "padding-40-40",
+            "top":    "clamp(25px, 19.72px + 1.41vw, 40px)",
+            "right":  "clamp(25px, 19.72px + 1.41vw, 40px)",
+            "bottom": "clamp(25px, 19.72px + 1.41vw, 40px)",
+            "left":   "clamp(25px, 19.72px + 1.41vw, 40px)"
+        },
+        {
+            "name": "padding-50-20",
+            "top":    "clamp(30px, 22.96px + 1.88vw, 50px)",
+            "right":  "clamp(15px, 13.24px + 0.47vw, 20px)",
+            "bottom": "clamp(30px, 22.96px + 1.88vw, 50px)",
+            "left":   "clamp(15px, 13.24px + 0.47vw, 20px)"
+        },
+        {
+            "name": "padding-60-20",
+            "top":    "clamp(35px, 26.20px + 2.35vw, 60px)",
+            "right":  "clamp(15px, 13.24px + 0.47vw, 20px)",
+            "bottom": "clamp(35px, 26.20px + 2.35vw, 60px)",
+            "left":   "clamp(15px, 13.24px + 0.47vw, 20px)"
+        },
+        {
+            "name": "padding-80-20",
+            "top":    "clamp(45px, 32.68px + 3.29vw, 80px)",
+            "right":  "clamp(15px, 13.24px + 0.47vw, 20px)",
+            "bottom": "clamp(45px, 32.68px + 3.29vw, 80px)",
+            "left":   "clamp(15px, 13.24px + 0.47vw, 20px)"
+        },
+        {
+            "name": "padding-100-20",
+            "top":    "clamp(55px, 39.15px + 4.23vw, 100px)",
+            "right":  "clamp(15px, 13.24px + 0.47vw, 20px)",
+            "bottom": "clamp(55px, 39.15px + 4.23vw, 100px)",
+            "left":   "clamp(15px, 13.24px + 0.47vw, 20px)"
+        }
+    ],
+
+    "margin": [
+        {
+            "name":   "margin-top-10",
+            "top":    "clamp(8px, 7.30px + 0.19vw, 10px)",
+            "right":  "0",
+            "bottom": "0",
+            "left":   "0"
+        },
+        {
+            "name":   "margin-top-20",
+            "top":    "clamp(15px, 13.24px + 0.47vw, 20px)",
+            "right":  "0",
+            "bottom": "0",
+            "left":   "0"
+        },
+        {
+            "name":   "margin-top-30",
+            "top":    "clamp(15px, 9.72px + 1.41vw, 30px)",
+            "right":  "0",
+            "bottom": "0",
+            "left":   "0"
+        },
+        {
+            "name":   "margin-top-40",
+            "top":    "clamp(15px, 6.20px + 2.35vw, 40px)",
+            "right":  "0",
+            "bottom": "0",
+            "left":   "0"
+        },
+        {
+            "name":   "margin-top-50",
+            "top":    "clamp(15px, 2.68px + 3.29vw, 50px)",
+            "right":  "0",
+            "bottom": "0",
+            "left":   "0"
+        },
+        {
+            "name":   "margin-top-60",
+            "top":    "clamp(15px, -0.85px + 4.23vw, 60px)",
+            "right":  "0",
+            "bottom": "0",
+            "left":   "0"
+        },
+        {
+            "name":   "margin-top-80",
+            "top":    "clamp(15px, -7.89px + 6.10vw, 80px)",
+            "right":  "0",
+            "bottom": "0",
+            "left":   "0"
+        },
+        {
+            "name":   "margin-top-100",
+            "top":    "clamp(15px, -14.93px + 7.98vw, 100px)",
+            "right":  "0",
+            "bottom": "0",
+            "left":   "0"
+        }
+    ],
+
+    "min_height": [
+        {
+            "name": "min-height-300",
+            "min_height": "clamp(250px, 232.39px + 4.69vw, 300px)"
+        },
+        {
+            "name": "min-height-400",
+            "min_height": "clamp(300px, 264.79px + 9.39vw, 400px)"
+        },
+        {
+            "name": "min-height-500",
+            "min_height": "clamp(300px, 229.58px + 18.78vw, 500px)"
+        },
+        {
+            "name": "min-height-600",
+            "min_height": "clamp(300px, 194.37px + 28.17vw, 600px)"
+        },
+        {
+            "name": "min-height-700",
+            "min_height": "clamp(300px, 159.15px + 37.56vw, 700px)"
+        },
+        {
+            "name": "min-height-800",
+            "min_height": "clamp(300px, 123.94px + 46.95vw, 800px)"
+        },
+        {
+            "name": "min-height-900",
+            "min_height": "clamp(300px, 88.73px + 56.34vw, 900px)"
+        },
+        {
+            "name": "min-height-1000",
+            "min_height": "clamp(300px, 53.52px + 65.73vw, 1000px)"
+        },
+        {
+            "name": "min-height-1100",
+            "min_height": "clamp(300px, 18.31px + 75.12vw, 1100px)"
+        },
+        {
+            "name": "min-height-1200",
+            "min_height": "clamp(300px, -16.90px + 84.51vw, 1200px)"
+        },
+        {
+            "name": "min-height-1300",
+            "min_height": "clamp(300px, -52.11px + 93.90vw, 1300px)"
+        },
+        {
+            "name": "min-height-1400",
+            "min_height": "clamp(300px, -87.32px + 103.29vw, 1400px)"
+        }
+    ],
+
+    "max_width": [
+        {
+            "name": "max-width-400",
+            "max_width": "clamp(375px, 366.20px + 2.35vw, 400px)"
+        },
+        {
+            "name": "max-width-500",
+            "max_width": "clamp(375px, 330.99px + 11.74vw, 500px)"
+        },
+        {
+            "name": "max-width-600",
+            "max_width": "clamp(375px, 295.77px + 21.13vw, 600px)"
+        },
+        {
+            "name": "max-width-700",
+            "max_width": "clamp(375px, 260.56px + 30.52vw, 700px)"
+        },
+        {
+            "name": "max-width-800",
+            "max_width": "clamp(375px, 225.35px + 39.91vw, 800px)"
+        },
+        {
+            "name": "max-width-900",
+            "max_width": "clamp(375px, 190.14px + 49.30vw, 900px)"
+        },
+        {
+            "name": "max-width-1000",
+            "max_width": "clamp(375px, 154.93px + 58.69vw, 1000px)"
+        },
+        {
+            "name": "max-width-1100",
+            "max_width": "clamp(375px, 119.72px + 68.08vw, 1100px)"
+        },
+        {
+            "name": "max-width-1200",
+            "max_width": "clamp(375px, 84.51px + 77.46vw, 1200px)"
+        },
+        {
+            "name": "max-width-1300",
+            "max_width": "clamp(375px, 49.30px + 86.85vw, 1300px)"
+        },
+        {
+            "name": "max-width-1400",
+            "max_width": "clamp(375px, 14.08px + 96.24vw, 1400px)"
+        }
+    ]
+}
