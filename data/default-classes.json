@@ -292,5 +292,38 @@
             "name": "max-width-1400",
             "max_width": "clamp(375px, 14.08px + 96.24vw, 1400px)"
         }
+    ],
+
+    "global_colors": [
+        {
+            "_id": "dce_primary",
+            "title": "DCE Primary",
+            "color": "#6366f1"
+        },
+        {
+            "_id": "dce_secondary",
+            "title": "DCE Secondary",
+            "color": "#4f46e5"
+        },
+        {
+            "_id": "dce_accent",
+            "title": "DCE Accent",
+            "color": "#10b981"
+        }
+    ],
+
+    "global_fonts": [
+        {
+            "_id": "dce_heading",
+            "title": "DCE Heading",
+            "typography_font_family": "Inter",
+            "typography_font_weight": "700"
+        },
+        {
+            "_id": "dce_body",
+            "title": "DCE Body",
+            "typography_font_family": "Inter",
+            "typography_font_weight": "400"
+        }
     ]
 }

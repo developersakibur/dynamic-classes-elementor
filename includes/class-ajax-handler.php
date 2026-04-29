@@ -159,6 +159,34 @@ class DCE_Ajax_Handler {
             $to_update[ 'dce_' . $type . '_classes' ] = DCE_Data_Loader::get( $type );
         }
 
+        // --- Reset Global Colors ---
+        $existing_colors = $kit->get_settings( 'custom_colors' );
+        $existing_colors = is_array( $existing_colors ) ? $existing_colors : [];
+        $default_colors  = DCE_Data_Loader::get( 'global_colors' );
+        if ( ! empty( $default_colors ) ) {
+            $existing_ids = array_column( $existing_colors, '_id' );
+            foreach ( $default_colors as $color ) {
+                if ( ! in_array( $color['_id'], $existing_ids, true ) ) {
+                    $existing_colors[] = $color;
+                }
+            }
+            $to_update['custom_colors'] = $existing_colors;
+        }
+
+        // --- Reset Global Fonts ---
+        $existing_fonts = $kit->get_settings( 'custom_typography' );
+        $existing_fonts = is_array( $existing_fonts ) ? $existing_fonts : [];
+        $default_fonts  = DCE_Data_Loader::get( 'global_fonts' );
+        if ( ! empty( $default_fonts ) ) {
+            $existing_ids = array_column( $existing_fonts, '_id' );
+            foreach ( $default_fonts as $font ) {
+                if ( ! in_array( $font['_id'], $existing_ids, true ) ) {
+                    $existing_fonts[] = $font;
+                }
+            }
+            $to_update['custom_typography'] = $existing_fonts;
+        }
+
         $kit->update_settings( $to_update );
 
         wp_send_json_success( [

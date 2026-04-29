@@ -242,6 +242,44 @@ class DCE_Plugin {
                 }
             }
 
+            // --- Global Colors ---
+            $existing_colors = $kit->get_settings( 'custom_colors' );
+            $existing_colors = is_array( $existing_colors ) ? $existing_colors : [];
+            $default_colors  = DCE_Data_Loader::get( 'global_colors' );
+
+            if ( ! empty( $default_colors ) ) {
+                $existing_ids = array_column( $existing_colors, '_id' );
+                $added_colors = 0;
+                foreach ( $default_colors as $color ) {
+                    if ( ! in_array( $color['_id'], $existing_ids, true ) ) {
+                        $existing_colors[] = $color;
+                        $added_colors++;
+                    }
+                }
+                if ( $added_colors > 0 ) {
+                    $to_update['custom_colors'] = $existing_colors;
+                }
+            }
+
+            // --- Global Fonts ---
+            $existing_fonts = $kit->get_settings( 'custom_typography' );
+            $existing_fonts = is_array( $existing_fonts ) ? $existing_fonts : [];
+            $default_fonts  = DCE_Data_Loader::get( 'global_fonts' );
+
+            if ( ! empty( $default_fonts ) ) {
+                $existing_ids = array_column( $existing_fonts, '_id' );
+                $added_fonts = 0;
+                foreach ( $default_fonts as $font ) {
+                    if ( ! in_array( $font['_id'], $existing_ids, true ) ) {
+                        $existing_fonts[] = $font;
+                        $added_fonts++;
+                    }
+                }
+                if ( $added_fonts > 0 ) {
+                    $to_update['custom_typography'] = $existing_fonts;
+                }
+            }
+
             if ( ! empty( $to_update ) ) {
                 $kit->update_settings( $to_update );
                 $this->css_generator->flush_cache();
