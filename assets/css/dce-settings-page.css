@@ -5,9 +5,13 @@
 
 /* Wrap */
 .dce-settings-wrap {
-    max-width: 960px;
     margin: 24px auto 40px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.dce-settings-container {
+    max-width: 960px;
+    margin: 0 auto;
 }
 
 /* ── Header ──────────────────────────────────────────────────── */
@@ -35,7 +39,7 @@
     color: #6366f1;
 }
 
-.dce-header__title h1 {
+.dce-actual-title {
     margin: 0;
     font-size: 22px;
     font-weight: 700;

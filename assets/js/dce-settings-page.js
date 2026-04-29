@@ -5,6 +5,9 @@
 (function ($) {
     'use strict';
 
+    if (typeof DCE_Settings === 'undefined') {
+        return;
+    }
     const S = DCE_Settings; // localised data
 
     // ── Helpers ───────────────────────────────────────────────────────────────
@@ -28,11 +31,6 @@
     const $importBtn    = $('#dce-import-btn');
     const $importLabel  = $('#dce-import-btn-label');
     const $importNotice = $('#dce-import-notice');
-
-    // Click on the drop zone → trigger file input
-    $importArea.on('click', function () {
-        $importFile.trigger('click');
-    });
 
     // Drag-over highlight
     $importArea.on('dragover dragenter', function (e) {

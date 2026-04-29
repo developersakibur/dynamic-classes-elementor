@@ -98,98 +98,105 @@ class DCE_Settings_Page {
         ?>
         <div class="wrap dce-settings-wrap">
 
-            <!-- Header -->
-            <div class="dce-header">
-                <div class="dce-header__title">
-                    <span class="dashicons dashicons-editor-code"></span>
-                    <h1><?php esc_html_e( 'Dynamic Classes for Elementor', 'dynamic-classes-elementor' ); ?></h1>
-                    <span class="dce-version">v<?php echo esc_html( DCE_VERSION ); ?></span>
-                </div>
-                <?php if ( $editor_url ) : ?>
-                <a href="<?php echo esc_url( $editor_url ); ?>" class="dce-btn dce-btn--primary dce-btn--open" target="_blank">
-                    <span class="dashicons dashicons-external"></span>
-                    <?php esc_html_e( 'Open in Elementor', 'dynamic-classes-elementor' ); ?>
-                </a>
-                <?php endif; ?>
-            </div>
+            <h1 class="wp-heading-inline" style="display:none;"><?php esc_html_e( 'Dynamic Classes for Elementor', 'dynamic-classes-elementor' ); ?></h1>
+            <hr class="wp-header-end" style="display:none;">
 
-            <!-- Stats bar -->
-            <div class="dce-stats">
-                <?php foreach ( $class_counts as $label => $count ) : ?>
-                <div class="dce-stat">
-                    <span class="dce-stat__count"><?php echo absint( $count ); ?></span>
-                    <span class="dce-stat__label"><?php echo esc_html( $label ); ?></span>
-                </div>
-                <?php endforeach; ?>
-            </div>
+            <div class="dce-settings-container">
 
-            <!-- Main grid -->
-            <div class="dce-grid">
-
-                <!-- Export -->
-                <div class="dce-card">
-                    <div class="dce-card__icon dce-card__icon--export">
-                        <span class="dashicons dashicons-download"></span>
+                <!-- Header -->
+                <div class="dce-header">
+                    <div class="dce-header__title">
+                        <span class="dashicons dashicons-editor-code"></span>
+                        <div class="dce-actual-title"><?php esc_html_e( 'Dynamic Classes for Elementor', 'dynamic-classes-elementor' ); ?></div>
+                        <span class="dce-version">v<?php echo esc_html( DCE_VERSION ); ?></span>
                     </div>
-                    <h2><?php esc_html_e( 'Export Classes', 'dynamic-classes-elementor' ); ?></h2>
-                    <p><?php esc_html_e( 'Download all your gap, padding, margin, min-height and max-width classes as a JSON file. Use it as a backup or to migrate to another site.', 'dynamic-classes-elementor' ); ?></p>
-                    <form method="post" action="<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>" class="dce-export-form">
-                        <input type="hidden" name="action" value="dce_export">
-                        <input type="hidden" name="nonce" value="<?php echo esc_attr( wp_create_nonce( 'dce_export_nonce' ) ); ?>">
-                        <button type="submit" class="dce-btn dce-btn--secondary">
-                            <span class="dashicons dashicons-download"></span>
-                            <?php esc_html_e( 'Export JSON', 'dynamic-classes-elementor' ); ?>
-                        </button>
-                    </form>
-                </div>
-
-                <!-- Import -->
-                <div class="dce-card">
-                    <div class="dce-card__icon dce-card__icon--import">
-                        <span class="dashicons dashicons-upload"></span>
-                    </div>
-                    <h2><?php esc_html_e( 'Import Classes', 'dynamic-classes-elementor' ); ?></h2>
-                    <p><?php esc_html_e( 'Upload a previously exported JSON file. New classes will be merged — duplicates are skipped and existing classes are never overwritten.', 'dynamic-classes-elementor' ); ?></p>
-                    <div class="dce-import-area" id="dce-import-area">
-                        <span class="dashicons dashicons-media-text"></span>
-                        <span class="dce-import-area__label"><?php esc_html_e( 'Click to choose a JSON file', 'dynamic-classes-elementor' ); ?></span>
-                        <input type="file" id="dce-import-file" accept=".json" style="display:none;">
-                    </div>
-                    <button type="button" class="dce-btn dce-btn--secondary" id="dce-import-btn" disabled>
-                        <span class="dashicons dashicons-upload"></span>
-                        <span id="dce-import-btn-label"><?php esc_html_e( 'Import JSON', 'dynamic-classes-elementor' ); ?></span>
-                    </button>
-                    <div class="dce-notice" id="dce-import-notice" style="display:none;"></div>
-                </div>
-
-                <!-- Reset -->
-                <div class="dce-card dce-card--danger">
-                    <div class="dce-card__icon dce-card__icon--reset">
-                        <span class="dashicons dashicons-image-rotate"></span>
-                    </div>
-                    <h2><?php esc_html_e( 'Reset to Defaults', 'dynamic-classes-elementor' ); ?></h2>
-                    <p><?php esc_html_e( 'Replace ALL your classes with the plugin\'s factory defaults. This permanently removes any custom classes you have created. Export first if you want a backup.', 'dynamic-classes-elementor' ); ?></p>
-                    <button type="button" class="dce-btn dce-btn--danger" id="dce-reset-btn">
-                        <span class="dashicons dashicons-image-rotate"></span>
-                        <span id="dce-reset-btn-label"><?php esc_html_e( 'Reset All Classes', 'dynamic-classes-elementor' ); ?></span>
-                    </button>
-                    <div class="dce-notice" id="dce-reset-notice" style="display:none;"></div>
-                </div>
-
-            </div><!-- .dce-grid -->
-
-            <!-- Footer -->
-            <div class="dce-footer">
-                <p>
-                    <?php esc_html_e( 'After importing or resetting, go to', 'dynamic-classes-elementor' ); ?>
                     <?php if ( $editor_url ) : ?>
-                        <a href="<?php echo esc_url( $editor_url ); ?>" target="_blank"><?php esc_html_e( 'Elementor → Site Settings → Dynamic Classes', 'dynamic-classes-elementor' ); ?></a>
-                    <?php else : ?>
-                        <?php esc_html_e( 'Elementor → Site Settings → Dynamic Classes', 'dynamic-classes-elementor' ); ?>
+                    <a href="<?php echo esc_url( $editor_url ); ?>" class="dce-btn dce-btn--primary dce-btn--open" target="_blank">
+                        <span class="dashicons dashicons-external"></span>
+                        <?php esc_html_e( 'Open in Elementor', 'dynamic-classes-elementor' ); ?>
+                    </a>
                     <?php endif; ?>
-                    <?php esc_html_e( 'to review your classes.', 'dynamic-classes-elementor' ); ?>
-                </p>
-            </div>
+                </div>
+
+                <!-- Stats bar -->
+                <div class="dce-stats">
+                    <?php foreach ( $class_counts as $label => $count ) : ?>
+                    <div class="dce-stat">
+                        <span class="dce-stat__count"><?php echo absint( $count ); ?></span>
+                        <span class="dce-stat__label"><?php echo esc_html( $label ); ?></span>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+
+                <!-- Main grid -->
+                <div class="dce-grid">
+
+                    <!-- Export -->
+                    <div class="dce-card">
+                        <div class="dce-card__icon dce-card__icon--export">
+                            <span class="dashicons dashicons-download"></span>
+                        </div>
+                        <h2><?php esc_html_e( 'Export Classes', 'dynamic-classes-elementor' ); ?></h2>
+                        <p><?php esc_html_e( 'Download all your gap, padding, margin, min-height and max-width classes as a JSON file. Use it as a backup or to migrate to another site.', 'dynamic-classes-elementor' ); ?></p>
+                        <form method="post" action="<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>" class="dce-export-form">
+                            <input type="hidden" name="action" value="dce_export">
+                            <input type="hidden" name="nonce" value="<?php echo esc_attr( wp_create_nonce( 'dce_export_nonce' ) ); ?>">
+                            <button type="submit" class="dce-btn dce-btn--secondary">
+                                <span class="dashicons dashicons-download"></span>
+                                <?php esc_html_e( 'Export JSON', 'dynamic-classes-elementor' ); ?>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Import -->
+                    <div class="dce-card">
+                        <div class="dce-card__icon dce-card__icon--import">
+                            <span class="dashicons dashicons-upload"></span>
+                        </div>
+                        <h2><?php esc_html_e( 'Import Classes', 'dynamic-classes-elementor' ); ?></h2>
+                        <p><?php esc_html_e( 'Upload a previously exported JSON file. New classes will be merged — duplicates are skipped and existing classes are never overwritten.', 'dynamic-classes-elementor' ); ?></p>
+                        <label class="dce-import-area" id="dce-import-area" for="dce-import-file">
+                            <span class="dashicons dashicons-media-text"></span>
+                            <span class="dce-import-area__label"><?php esc_html_e( 'Click to choose a JSON file', 'dynamic-classes-elementor' ); ?></span>
+                        </label>
+                        <input type="file" id="dce-import-file" accept=".json" style="display:none;">
+                        <button type="button" class="dce-btn dce-btn--secondary" id="dce-import-btn" disabled>
+                            <span class="dashicons dashicons-upload"></span>
+                            <span id="dce-import-btn-label"><?php esc_html_e( 'Import JSON', 'dynamic-classes-elementor' ); ?></span>
+                        </button>
+                        <div class="dce-notice" id="dce-import-notice" style="display:none;"></div>
+                    </div>
+
+                    <!-- Reset -->
+                    <div class="dce-card dce-card--danger">
+                        <div class="dce-card__icon dce-card__icon--reset">
+                            <span class="dashicons dashicons-image-rotate"></span>
+                        </div>
+                        <h2><?php esc_html_e( 'Reset to Defaults', 'dynamic-classes-elementor' ); ?></h2>
+                        <p><?php esc_html_e( 'Replace ALL your classes with the plugin\'s factory defaults. This permanently removes any custom classes you have created. Export first if you want a backup.', 'dynamic-classes-elementor' ); ?></p>
+                        <button type="button" class="dce-btn dce-btn--danger" id="dce-reset-btn">
+                            <span class="dashicons dashicons-image-rotate"></span>
+                            <span id="dce-reset-btn-label"><?php esc_html_e( 'Reset All Classes', 'dynamic-classes-elementor' ); ?></span>
+                        </button>
+                        <div class="dce-notice" id="dce-reset-notice" style="display:none;"></div>
+                    </div>
+
+                </div><!-- .dce-grid -->
+
+                <!-- Footer -->
+                <div class="dce-footer">
+                    <p>
+                        <?php esc_html_e( 'After importing or resetting, go to', 'dynamic-classes-elementor' ); ?>
+                        <?php if ( $editor_url ) : ?>
+                            <a href="<?php echo esc_url( $editor_url ); ?>" target="_blank"><?php esc_html_e( 'Elementor → Site Settings → Dynamic Classes', 'dynamic-classes-elementor' ); ?></a>
+                        <?php else : ?>
+                            <?php esc_html_e( 'Elementor → Site Settings → Dynamic Classes', 'dynamic-classes-elementor' ); ?>
+                        <?php endif; ?>
+                        <?php esc_html_e( 'to review your classes.', 'dynamic-classes-elementor' ); ?>
+                    </p>
+                </div>
+
+            </div><!-- .dce-settings-container -->
 
         </div><!-- .wrap -->
         <?php

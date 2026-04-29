@@ -118,7 +118,7 @@ class DCE_Plugin {
                     <h1>clamp() Generator</h1>
                     <div class="toggle-container">
                         <label class="toggle-switch">
-                            <input type="checkbox" id="configToggle">
+                            <input type="checkbox" id="configToggle" checked>
                             <span class="toggle-slider"></span>
                         </label>
                     </div>

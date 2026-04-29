@@ -8,9 +8,8 @@
     const DCE_Calculator = {
         BRAND_NAME: "developersakibur",
         DEFAULT_CONFIGS: {
-            text: { minValue: 14, minVp: 16, maxValue: 40, maxVp: 72 },
+            text: { minValue: 14, minVp: 16, maxValue: 30, maxVp: 48 },
             padding: { minValue: 15, minVp: 20, maxValue: 55, maxVp: 100 },
-            max_width: { minValue: 320, minVp: 375, maxValue: 1200, maxVp: 1440 }
         },
         DEFAULT_VIEWPORT: {
             minWidth: 375,
@@ -36,7 +35,7 @@
 
             // Set default maxSize if empty
             if (!$('#maxSize').val()) {
-                $('#maxSize').val(40);
+                $('#maxSize').val(48);
             }
             this.updateMinSize();
             this.updateSliderPreview();
@@ -300,9 +299,13 @@
             this.configs = savedConfigs ? JSON.parse(savedConfigs) : { ...this.DEFAULT_CONFIGS };
             this.viewport = savedViewport ? JSON.parse(savedViewport) : { ...this.DEFAULT_VIEWPORT };
 
-            if (panelOpen === 'true') {
+            // Default to open if never set
+            if (panelOpen === null || panelOpen === 'true') {
                 $('#configToggle').prop('checked', true);
                 $('.config-section').show();
+            } else {
+                $('#configToggle').prop('checked', false);
+                $('.config-section').hide();
             }
         },
 

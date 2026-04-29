@@ -1,15 +1,15 @@
 <?php
 /**
- * Plugin Name: Dynamic Classes for Elementor
- * Description: Add dynamic CSS classes (gap, padding, margin) with clamp() support via Elementor Site Settings.
- * Version:     3.7.0
- * Author:      DEVSR
- * Text Domain: dynamic-classes-elementor
- * Domain Path: /languages
+ * Plugin Name:  Dynamic Classes for Elementor
+ * Description:  Add dynamic CSS classes (gap, padding, margin) with clamp() support via Elementor Site Settings.
+ * Version:      3.7.1
+ * Author:       DEVSR
+ * Text Domain:  dynamic-classes-elementor
+ * Domain Path:  /languages
  * Requires at least: 5.8
- * Requires PHP: 7.4
- * License:     GPL v2 or later
- * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Requires PHP:      7.4
+ * License:      GPL v2 or later
+ * License URI:  https://www.gnu.org/licenses/gpl-2.0.html
  *
  * @package DynamicClassesElementor
  */
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-define( 'DCE_VERSION',    '3.7.0' );
+define( 'DCE_VERSION',    '3.7.1' );
 define( 'DCE_PLUGIN_FILE', __FILE__ );
 define( 'DCE_PLUGIN_DIR',  plugin_dir_path( __FILE__ ) );
 define( 'DCE_PLUGIN_URL',  plugin_dir_url( __FILE__ ) );

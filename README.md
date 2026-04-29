@@ -2,7 +2,7 @@
 
 > 🎨 Create reusable, fluid CSS spacing classes with `clamp()` support — managed directly inside Elementor Site Settings.
 
-[![Version](https://img.shields.io/badge/Version-3.7.0-6366f1.svg)](https://github.com/developersakibur/dynamic-classes-elementor)
+[![Version](https://img.shields.io/badge/Version-3.7.1-6366f1.svg)](https://github.com/developersakibur/dynamic-classes-elementor)
 [![WordPress](https://img.shields.io/badge/WordPress-5.8%2B-blue.svg)](https://wordpress.org/)
 [![Elementor](https://img.shields.io/badge/Elementor-3.5%2B-pink.svg)](https://elementor.com/)
 [![PHP](https://img.shields.io/badge/PHP-7.4%2B-purple.svg)](https://www.php.net/)
@@ -218,6 +218,13 @@ All defaults can be edited or deleted in **Site Settings → Dynamic Classes**. 
 ---
 
 ## 📋 Changelog
+
+### 3.7.1
+- **Fix:** Project structure cleaned up — removed redundant files and folders that caused "invalid header" errors.
+- **Fix:** JSON Import UX — clicking the import area now reliably triggers the file selection window.
+- **Fix:** Admin Layout — fixed notice injection that caused Elementor/WordPress alerts to break the settings page layout.
+- **Improvement:** `clamp()` Generator now defaults to "on" with optimized text presets.
+- **Improvement:** Calculator values are now driven dynamically by JS logic for better consistency.
 
 ### 3.7.0
 - Added **Settings → Dynamic Classes** submenu in WordPress admin
